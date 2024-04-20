@@ -8,7 +8,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
-	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/dal"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/complete-api/api/dal"
 )
 
 type GlovoHandler struct {

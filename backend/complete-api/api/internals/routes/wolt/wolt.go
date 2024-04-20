@@ -5,8 +5,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
-	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/dal"
-	woltHandler "github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/internals/handlers/wolt"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/complete-api/api/dal"
+	woltHandler "github.com/Timotej979/Dragonhack24-BunchLunch/backend/complete-api/api/internals/handlers/wolt"
 )
 
 // SetupRoutes sets up the routes for the wolt and glovo APIs

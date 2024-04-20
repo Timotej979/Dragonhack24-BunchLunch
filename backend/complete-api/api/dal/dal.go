@@ -7,9 +7,9 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 
-	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/dal/mongo"
-	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/dal/mysql"
-	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/dal/postgres"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/complete-api/api/dal/mongo"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/complete-api/api/dal/mysql"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/complete-api/api/dal/postgres"
 )
 
 // DALConfig represents the configuration for the Data Access Layer

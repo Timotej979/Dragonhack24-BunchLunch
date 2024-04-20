@@ -5,8 +5,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
-	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/dal"
-	glovoHandler "github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/internals/handlers/glovo"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/complete-api/api/dal"
+	glovoHandler "github.com/Timotej979/Dragonhack24-BunchLunch/backend/complete-api/api/internals/handlers/glovo"
 )
 
 // SetupRoutes sets up the routes for the glovo and glovo APIs
