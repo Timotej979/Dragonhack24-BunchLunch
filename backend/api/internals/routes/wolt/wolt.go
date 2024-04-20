@@ -5,8 +5,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
-	"github.com/Timotej979/Dragonhack24-BunchLunch/api/dal"
-	woltHandler "github.com/Timotej979/Dragonhack24-BunchLunch/api/internals/handlers/wolt"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/dal"
+	woltHandler "github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/internals/handlers/wolt"
 )
 
 // SetupRoutes sets up the routes for the wolt and glovo APIs
@@ -19,6 +19,5 @@ func SetupWoltRoutes(router fiber.Router, dalConfig dal.DALConfig, defaultLogger
 
 	// Health check of APIs
 	wolt.Get("/healthz", woltHandlerInstance.Healthz)
-
 
 }

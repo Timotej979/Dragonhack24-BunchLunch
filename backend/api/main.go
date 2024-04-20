@@ -10,9 +10,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	// Locally available packages
-	"github.com/Timotej979/Celtra-challenge/api/config"
-	"github.com/Timotej979/Celtra-challenge/api/dal"
-	"github.com/Timotej979/Celtra-challenge/api/router"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/config"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/dal"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/router"
 )
 
 func main() {

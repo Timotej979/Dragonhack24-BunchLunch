@@ -5,8 +5,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
-	"github.com/Timotej979/Dragonhack24-BunchLunch/api/dal"
-	glovoHandler "github.com/Timotej979/Dragonhack24-BunchLunch/api/internals/handlers/glovo"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/dal"
+	glovoHandler "github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/internals/handlers/glovo"
 )
 
 // SetupRoutes sets up the routes for the glovo and glovo APIs
@@ -19,6 +19,5 @@ func SetupGlovoRoutes(router fiber.Router, dalConfig dal.DALConfig, defaultLogge
 
 	// Health check of APIs
 	glovo.Get("/healthz", glovoHandlerInstance.Healthz)
-
 
 }
