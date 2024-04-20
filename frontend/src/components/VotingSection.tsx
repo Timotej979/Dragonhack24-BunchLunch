@@ -1,6 +1,10 @@
+//src/components/VotingSection.tsx
+
 import React from 'react';
 import VoteOption from './VoteOption';
 import CategoryCard from './CategoryCard';
+import RestaurantChooser from './RestaurantChooser';
+
 
 const VotingSection: React.FC = () => {
   return (
@@ -21,6 +25,8 @@ const VotingSection: React.FC = () => {
           <CategoryCard votes={7} name="Maharaja" cuisine="Indian" />
           <CategoryCard votes={6} name="Gostilna Čad" cuisine="Grill" />
           <CategoryCard votes={6} name="Gostilna Čad" cuisine="Grill" />
+          {/* This new card allows the user to select their own choice */}
+            <RestaurantChooser onSelect={(restaurant) => console.log(restaurant)} />
           {/* Add more CategoryCard components as needed */}
         </div>
       </div>
