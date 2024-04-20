@@ -12,7 +12,7 @@ import (
 
 func TestPrecedence(t *testing.T) {
 	// Run the tests in a temporary directory
-	tmpDir, err := os.MkdirTemp("", "userapi")
+	tmpDir, err := os.MkdirTemp("", "testapi")
 	require.NoError(t, err, "error creating a temporary test directory")
 	testDir, err := os.Getwd()
 	require.NoError(t, err, "error getting the current working directory")

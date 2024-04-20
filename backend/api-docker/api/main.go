@@ -57,10 +57,10 @@ func main() {
 	app := fiber.New()
 
 	// Setup the routes
-	router.SetupRouter(app, dalConfig, log.Logger)
+	router.SetupRouter(app, dalConfig, log.Logger, envVars.GoogleKey)
 
 	// Start the server
-	err = app.Listen(":3000")
+	err = app.Listen(":6000")
 	if err != nil {
 		log.Fatal().Err(err).Msg("error starting server")
 	}
