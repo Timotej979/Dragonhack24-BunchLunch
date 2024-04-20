@@ -38,13 +38,11 @@ func NewWoltHandler(dalConfig dal.DALConfig, logger zerolog.Logger, googleKey st
 		log.Fatal().Err(err).Msg("error connecting to the database")
 	}
 
-	/*
-		// Migrate the database
-		err = dalInstance.DbDriver.Migrate()
-		if err != nil {
-			log.Fatal().Err(err).Msg("error migrating the database")
-		}
-	*/
+	// Migrate the database
+	err = dalInstance.DbDriver.Migrate()
+	if err != nil {
+		log.Fatal().Err(err).Msg("error migrating the database")
+	}
 
 	return &WoltHandler{
 		dal:       dalInstance,
