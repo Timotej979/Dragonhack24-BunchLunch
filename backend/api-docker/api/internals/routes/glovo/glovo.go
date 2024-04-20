@@ -10,7 +10,7 @@ import (
 )
 
 // SetupRoutes sets up the routes for the glovo and glovo APIs
-func SetupGlovoRoutes(router fiber.Router, dalConfig dal.DALConfig, defaultLogger zerolog.Logger) {
+func SetupRoutes(router fiber.Router, dalConfig dal.DALConfig, defaultLogger zerolog.Logger) {
 	// Create handlers
 	glovo := router.Group("/glovo")
 

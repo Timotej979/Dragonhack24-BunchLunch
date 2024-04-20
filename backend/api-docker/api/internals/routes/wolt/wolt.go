@@ -10,7 +10,7 @@ import (
 )
 
 // SetupRoutes sets up the routes for the wolt and glovo APIs
-func SetupWoltRoutes(router fiber.Router, dalConfig dal.DALConfig, defaultLogger zerolog.Logger) {
+func SetupRoutes(router fiber.Router, dalConfig dal.DALConfig, defaultLogger zerolog.Logger) {
 	// Create handlers
 	wolt := router.Group("/wolt")
 
