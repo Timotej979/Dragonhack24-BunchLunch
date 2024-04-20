@@ -25,9 +25,9 @@ type DatabaseDriver interface {
 	Connect() error
 	Close() error
 	Migrate() error
-	InsertUserData(accountID string, data string) error
-	GetUserData(accountID string) (string, time.Time, error)
-	DeleteUserData(accountID string) error
+	InsertRestaurantData(name string, lattiude float64, longitude float64, price float64, rating float64) error
+	GetRestaurantData(name string) (string, time.Time, error)
+	DeleteRestaurantData(name string) error
 }
 
 // DAL is the Data Access Layer
