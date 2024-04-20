@@ -1,0 +1,27 @@
+apiVersion: stackgres.io/v1
+kind: SGCluster
+metadata:
+  name: supabase-db
+spec:
+  instances: 2
+  nonProductionOptions:
+    disableClusterPodAntiAffinity: true
+  pods:
+    persistentVolume: 
+      size: '5Gi'
+      storageClass: 'csi-hostpath-sc'
+  configurations:
+    sgPoolingConfig: supabase-db
+  postgres:
+    version: '16'
+    extensions:
+    - name: pgsodium
+    - name: pg_graphql
+    - name: pg_stat_statements
+    - name: pgcrypto
+    - name: pgjwt
+    - name: uuid-ossp
+  managedSql:
+    scripts:
+    - sgScript: supabase-initdb
+---
