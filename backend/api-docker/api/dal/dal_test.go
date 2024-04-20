@@ -15,7 +15,7 @@ import (
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
 
-	"github.com/Timotej979/Celtra-challenge/api/dal"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api-docker/api/dal"
 )
 
 var disableRyuk string
