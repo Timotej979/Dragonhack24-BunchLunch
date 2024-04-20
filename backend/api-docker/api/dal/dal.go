@@ -2,7 +2,6 @@ package dal
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -26,7 +25,6 @@ type DatabaseDriver interface {
 	Close() error
 	Migrate() error
 	InsertRestaurantData(name string, lattiude float64, longitude float64, price float64, rating float64) error
-	GetRestaurantData(name string) (string, time.Time, error)
 	DeleteRestaurantData(name string) error
 }
 
