@@ -9,14 +9,16 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
-      {isVisible && ( // Conditional rendering based on state
+      {isVisible ? ( // Conditional rendering based on state
         <div className="flex flex-col items-center justify-center min-h-screen">
-            <CircularLoader />
-          <Hero onButtonClick={() => setIsVisible(false)} /> // Passing the function as a prop
+          <Hero onButtonClick={() => setIsVisible(false)} />
           <div className="flex flex-col items-center justify-center min-h-screen -mt-32">
             <Convincing />
           </div>
         </div>
+      ) : (
+
+        <CircularLoader /> // Show loader when isVisible is false
       )}
     </main>
   );
