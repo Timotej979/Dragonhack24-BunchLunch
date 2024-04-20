@@ -1,0 +1,8 @@
+# Environment configs
+.env
+
+# Volumes for supabase
+volumes/
+
+# Binaries for API
+bunchlunchapi
