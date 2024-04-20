@@ -8,7 +8,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
-	"github.com/Timotej979/Dragonhack24-BunchLunch/api/dal"
+	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api/dal"
 )
 
 type WoltHandler struct {
