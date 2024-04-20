@@ -18,7 +18,7 @@ const VotingSection: React.FC = () => {
         <VoteOption timeRange="11:45-" actionDescription="Wait for your food" />
       </div>
 
-      {/* Categories section */}
+      {/* Top picks section */}
       <div className="bg-white rounded-lg shadow-md p-4">
         <h2 className="text-2xl font-bold mb-4">Categories</h2>
         <div className="grid grid-cols-3 gap-4 text-black">
