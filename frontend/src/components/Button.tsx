@@ -1,3 +1,4 @@
+//src/components/Button.tsx
 import * as React from "react";
 
 interface ButtonProps {
@@ -7,7 +8,7 @@ interface ButtonProps {
   yarMoney?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, primary, outline, yarMoney }) => {
+const Button: React.FC<ButtonProps & { onClick?: () => void }> = ({ label, primary, outline, yarMoney, onClick }) => {
   // Base classes for button styling
   const baseClasses = "px-6 py-3 rounded text-sm font-semibold shrink-0 transition-all duration-300 ease-in-out transform hover:scale-105 relative overflow-hidden";
   // Classes for primary button style
@@ -46,7 +47,7 @@ const Button: React.FC<ButtonProps> = ({ label, primary, outline, yarMoney }) =>
           }
         `}
       </style>
-      <button className={className}>
+      <button className={className} onClick={onClick}>
         {label}
       </button>
     </>

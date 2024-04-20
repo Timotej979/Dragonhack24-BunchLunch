@@ -1,7 +1,8 @@
-import * as React from "react";
-import Button from "./Button"; // Assuming Button is correctly imported from its file location
+//src/components/Hero.tsx
+import React from 'react';
+import Button from "./Button";
 
-const Hero: React.FC = () => {
+const Hero = ({ onButtonClick }) => { // Accept the function as a prop
   return (
     <section className="box-border flex relative flex-col shrink-0 self-stretch px-20 mt-5 mb-auto w-auto rounded-xl max-w-[1440px] max-md:grow max-md:mt-12 max-sm:m-auto">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -16,7 +17,7 @@ const Hero: React.FC = () => {
               </p>
             </div>
             <div className="flex flex-row gap-4 justify-start items-center mt-9 mr-auto w-full max-w-[444px] max-md:justify-start max-md:items-center max-md:self-stretch max-md:mx-auto max-md:w-full max-md:max-w-[520px]">
-              <Button label="Get Started" primary={true} />
+              <Button label="Get Started" primary={true} onClick={onButtonClick} /> 
               <Button label="Learn More" outline={true} />
             </div>
           </div>
@@ -24,7 +25,7 @@ const Hero: React.FC = () => {
         <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
           <img
             loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F13725b47a855414e93fd6631495f584e"
+            src="../6mj_bfFudX-1k_iN6pXrb-transformed.jpeg"
             alt="Placeholder image"
             className="box-border object-contain overflow-hidden shrink-0 w-auto rounded-2xl aspect-[0.89] min-h-[20px] min-w-[20px]"
           />

@@ -14,7 +14,7 @@ const SocialMediaIcon: React.FC<SocialMediaIconProps> = ({ src, alt }) => {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="box-border flex relative flex-col shrink-0 items-center p-5 bg-stone-50">
+    <footer className="box-border flex relative flex-col shrink-0 items-center p-5 bg-stone-50 w-full">
       
       <p className="mt-5 text-xs text-center text-neutral-600">
         Copyright © 2024 ByteSized, thanks to Wolt.
