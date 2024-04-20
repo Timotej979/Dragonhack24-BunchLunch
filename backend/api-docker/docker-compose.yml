@@ -18,6 +18,9 @@ services:
       - API_DB_USERNAME
       - API_DB_PASSWORD
       - API_DB_NAME
+      - API_GOOGLE_KEY
+    networks:
+      - api-nginx
     #healthcheck:
     #  test: ["CMD", "curl -f http://localhost:8080/bunchlunch-api/v1/wolt/healthz", "&&" ,"curl -f http://localhost:8080/bunchlunch-api/v1/glovo/db/healthz"]
     #  start_period: 20s
@@ -36,9 +39,14 @@ services:
     depends_on:
       api:
         condition: service_started
+    networks:
+      - api-nginx
     #healthcheck:
     #  test: ["CMD", "curl -f http://localhost:8000/bunchlunch-api/v1/wolt/healthz", "&&", "curl -f http://localhost:8000/bunchlunch-api/v1/glovo/db/healthz"]
     #  start_period: 20s
     #  interval: 10s
     #  timeout: 5s
     #  retries: 5
+
+networks:
+  api-nginx:

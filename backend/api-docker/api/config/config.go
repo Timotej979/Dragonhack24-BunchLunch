@@ -34,6 +34,7 @@ type EnvVarStore struct {
 	DbUsername string
 	DbPassword string
 	DbName     string
+	GoogleKey  string
 }
 
 // Get the root command for our CLI tool and extract the values from it.\
@@ -61,6 +62,7 @@ func GetEnvVars() (*EnvVarStore, error) {
 		DbName:     cmd.Flag("db-name").Value.String(),
 		DbHost:     cmd.Flag("db-host").Value.String(),
 		DbPort:     port,
+		GoogleKey:  cmd.Flag("google-key").Value.String(),
 	}
 
 	return vars, nil
@@ -77,6 +79,7 @@ func NewRootCommand() *cobra.Command {
 		DbName:     "UserData",
 		DbHost:     "localhost",
 		DbPort:     5432,
+		GoogleKey:  "",
 	}
 
 	// Define our command
@@ -102,6 +105,7 @@ func NewRootCommand() *cobra.Command {
 			fmt.Fprintf(out, "DbUsername: %s\n", variables.DbUsername)
 			fmt.Fprint(out, "DbPassword: REDACTED\n")
 			fmt.Fprintf(out, "DbName: %s\n", variables.DbName)
+			fmt.Fprintf(out, "GoogleKey: REDACTED\n")
 
 		},
 	}
@@ -114,6 +118,7 @@ func NewRootCommand() *cobra.Command {
 	rootCmd.Flags().StringVarP(&variables.DbUsername, "db-username", "u", "Celtra", "The database username")
 	rootCmd.Flags().StringVarP(&variables.DbPassword, "db-password", "p", "C3ltr4Ch4ll3ng3", "The database password")
 	rootCmd.Flags().StringVarP(&variables.DbName, "db-name", "n", "UserData", "The database name")
+	rootCmd.Flags().StringVarP(&variables.GoogleKey, "google-key", "k", "", "The Google API key")
 
 	return rootCmd
 }
