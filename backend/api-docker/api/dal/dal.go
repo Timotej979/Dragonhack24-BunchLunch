@@ -7,8 +7,6 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 
-	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api-docker/api/dal/mongo"
-	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api-docker/api/dal/mysql"
 	"github.com/Timotej979/Dragonhack24-BunchLunch/backend/api-docker/api/dal/postgres"
 )
 
@@ -52,10 +50,6 @@ func NewDAL(config *DALConfig) (*DAL, error) {
 	switch config.DbType {
 	case "postgres":
 		dal.DbDriver = postgres.NewPostgresDriver(config.DbHost, config.DbPort, config.DbUser, config.DbPass, config.DbName, config.DbLogger)
-	case "mysql":
-		dal.DbDriver = mysql.NewMySQLDriver(config.DbHost, config.DbPort, config.DbUser, config.DbPass, config.DbName, config.DbLogger)
-	case "mongo":
-		dal.DbDriver = mongo.NewMongoDBDriver(config.DbHost, config.DbPort, config.DbUser, config.DbPass, config.DbName, config.DbLogger)
 	default:
 		err := fmt.Errorf("invalid database type: %s", config.DbType)
 		log.Error().Err(err).Msg("failed to create DAL")

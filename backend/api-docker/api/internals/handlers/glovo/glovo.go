@@ -1,8 +1,6 @@
 package glovoHandlers
 
 import (
-	"time"
-
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 
@@ -32,11 +30,13 @@ func NewGlovoHandler(dalConfig dal.DALConfig, logger zerolog.Logger) *GlovoHandl
 		log.Fatal().Err(err).Msg("error connecting to the database")
 	}
 
-	// Migrate the database
-	err = dalInstance.DbDriver.Migrate()
-	if err != nil {
-		log.Fatal().Err(err).Msg("error migrating the database")
-	}
+	/*
+		// Migrate the database
+		err = dalInstance.DbDriver.Migrate()
+		if err != nil {
+			log.Fatal().Err(err).Msg("error migrating the database")
+		}
+	*/
 
 	return &GlovoHandler{
 		dal: dalInstance,
@@ -47,28 +47,4 @@ func NewGlovoHandler(dalConfig dal.DALConfig, logger zerolog.Logger) *GlovoHandl
 func (h *GlovoHandler) Healthz(c *fiber.Ctx) error {
 	log.Info().Msg("Checking mock API health...")
 	return c.JSON(fiber.Map{"status": "ok"})
-}
-
-func (h *GlovoHandler) GetRandomAccountData(c *fiber.Ctx) error {
-	log.Info().Msg("Getting random account data...")
-
-	// Get the accountID from the URL
-	accountID := c.Params("accountID")
-
-	// Generate data from string
-	var data string
-	if len(accountID)%2 == 0 {
-		data = "even"
-	} else {
-		data = "odd"
-	}
-
-	// Write to the DB through DAL
-	err := h.dal.DbDriver.InsertUserData(accountID, data)
-	if err != nil {
-		log.Error().Err(err).Msg("error writing to the database")
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "error writing to the database"})
-	}
-
-	return c.JSON(fiber.Map{"status": "ok", "accountID": accountID, "timestamp": time.Now().Unix(), "data": data})
 }

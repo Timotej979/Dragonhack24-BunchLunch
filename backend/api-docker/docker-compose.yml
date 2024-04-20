@@ -1,0 +1,44 @@
+services:
+  
+  # Golang API
+  api:
+    image: "bunchlunch-api:v1"
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      args:
+        - API_ARCH
+        - API_ALPINE_VERSION
+    restart: always
+    environment:
+      - API_CONFIG
+      - API_DB_TYPE
+      - API_DB_HOST
+      - API_DB_PORT=5432
+      - API_DB_USERNAME
+      - API_DB_PASSWORD
+      - API_DB_NAME
+    #healthcheck:
+    #  test: ["CMD", "curl -f http://localhost:8080/bunchlunch-api/v1/wolt/healthz", "&&" ,"curl -f http://localhost:8080/bunchlunch-api/v1/glovo/db/healthz"]
+    #  start_period: 20s
+    #  interval: 10s
+    #  timeout: 5s
+    #  retries: 5
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: "bunchlunch-nginx:v1"
+    build:
+      context: ./nginx
+    restart: always
+    ports:
+      - ${NGINX_OUT_PORT}:8000
+    depends_on:
+      api:
+        condition: service_started
+    #healthcheck:
+    #  test: ["CMD", "curl -f http://localhost:8000/bunchlunch-api/v1/wolt/healthz", "&&", "curl -f http://localhost:8000/bunchlunch-api/v1/glovo/db/healthz"]
+    #  start_period: 20s
+    #  interval: 10s
+    #  timeout: 5s
+    #  retries: 5

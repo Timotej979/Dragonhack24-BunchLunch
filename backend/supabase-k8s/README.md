@@ -56,8 +56,10 @@ kubectl -n default create secret generic demo-supabase-smtp \
 # creates DB secret
 kubectl -n default create secret generic demo-supabase-db \
   --from-literal=username='postgres' \
-  --from-literal=password='## INSERT POSTGRES PASS HERE ##'
+  --from-literal=password='8a86-c0d3-4689-b00' \
+  --from-literal=database='supabase-db.default.svc.cluster.local'
 
-# 
+# Deploy cluster on default namespace
+helm install demo -f values.stackgres.yaml .
 
-
+```
