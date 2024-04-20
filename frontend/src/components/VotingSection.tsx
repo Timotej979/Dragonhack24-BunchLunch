@@ -1,36 +1,49 @@
-//src/components/VotingSection.tsx
-
-import React from 'react';
-import VoteOption from './VoteOption';
+import React, { useState, useEffect } from 'react';
+import { Flipper, Flipped } from 'react-flip-toolkit';
 import CategoryCard from './CategoryCard';
 import RestaurantChooser from './RestaurantChooser';
 
+const VotingSection = () => {
+  const [categories, setCategories] = useState([
+    { name: "Maharaja", cuisine: "Indian", votes: 7 },
+    { name: "Random", cuisine: "Grill", votes: 6 },
+    { name: "Gostilna Čad", cuisine: "Grill", votes: 6 },
+  ]);
 
-const VotingSection: React.FC = () => {
+  useEffect(() => {
+    const sortedCategories = [...categories].sort((a, b) => b.votes - a.votes);
+    setCategories(sortedCategories);
+  }, [categories]);
+
+  const handleVote = (index: number) => {
+    const newCategories = [...categories];
+    newCategories[index].votes += 1;
+    setCategories(newCategories);
+  };
+
   return (
-    <div className="space-y-8">
-      {/* Vote for a restaurant section */}
-      <h2 className="text-3xl font-bold px-4 py-2 font-montserrat text-black">1. Vote for a restaurant to make a group order from</h2>
-      <div className="bg-white rounded-lg shadow-md mt-12">
-        
-        <VoteOption timeRange="11:00-11:30" actionDescription="Vote restaurant" />
-        <VoteOption timeRange="11:30-11:45" actionDescription="Choose dish" />
-        <VoteOption timeRange="11:45-" actionDescription="Wait for your food" />
-      </div>
-
-      {/* Top picks section */}
-      <div className="bg-white rounded-lg shadow-md p-4">
-        <h2 className="text-2xl font-bold mb-4">Categories</h2>
-        <div className="grid grid-cols-3 gap-4 text-black">
-          <CategoryCard votes={7} name="Maharaja" cuisine="Indian" />
-          <CategoryCard votes={6} name="Gostilna Čad" cuisine="Grill" />
-          <CategoryCard votes={6} name="Gostilna Čad" cuisine="Grill" />
-          {/* This new card allows the user to select their own choice */}
+    <Flipper flipKey={categories.map(category => category.votes).join('')}>
+      <div className="space-y-8">
+        <div className="bg-white rounded-lg shadow-md p-4">
+          <h2 className="text-2xl font-bold mb-4">Categories</h2>
+          <div className="grid grid-cols-3 gap-4 text-black">
+            {categories.map((category, index) => (
+              <Flipped key={index} flipId={category.name}>
+                <div>
+                  <CategoryCard
+                    votes={category.votes}
+                    name={category.name}
+                    cuisine={category.cuisine}
+                    onClick={() => handleVote(index)}
+                  />
+                </div>
+              </Flipped>
+            ))}
             <RestaurantChooser onSelect={(restaurant) => console.log(restaurant)} />
-          {/* Add more CategoryCard components as needed */}
+          </div>
         </div>
       </div>
-    </div>
+    </Flipper>
   );
 };
 
