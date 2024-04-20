@@ -12,11 +12,14 @@ import (
 )
 
 // UserData model
-type UserData struct {
+type RestaurantData struct {
 	ID        uint      `gorm:"primaryKey"`
-	AccountID string    `gorm:"column:account_id;"`
+	Name      string    `gorm:"column:name;"`
+	Lattiude  float64   `gorm:"column:lattiude;"`
+	Longitude float64   `gorm:"column:longitude;"`
+	Price     float64   `gorm:"column:price;"`
+	Rating    float64   `gorm:"column:rating;"`
 	Timestamp time.Time `gorm:"column:timestamp;"`
-	Data      string    `gorm:"column:data;"`
 }
 
 type PostgresDriver struct {
@@ -88,7 +91,7 @@ func (p *PostgresDriver) Migrate() error {
 	log.Info().Msg("Migrating the database...")
 
 	// Perform the database migration
-	err := p.Db.AutoMigrate(&UserData{})
+	err := p.Db.AutoMigrate(&RestaurantData{})
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to migrate the database")
 		return err
@@ -97,17 +100,20 @@ func (p *PostgresDriver) Migrate() error {
 }
 
 // InsertUserData inserts a new user data record into the database
-func (p *PostgresDriver) InsertUserData(accountID string, data string) error {
+func (p *PostgresDriver) InsertRestaurantData(name string, lattiude float64, longitude float64, price float64, rating float64) error {
 	log.Info().Msg("Inserting user data record...")
 
-	userData := UserData{
-		AccountID: accountID,
+	restaurantData := RestaurantData{
+		Name:      name,
+		Lattiude:  lattiude,
+		Longitude: longitude,
+		Price:     price,
+		Rating:    rating,
 		Timestamp: time.Now(),
-		Data:      data,
 	}
 
 	// Insert the user data record
-	result := p.Db.Create(&userData)
+	result := p.Db.Create(&restaurantData)
 	if result.Error != nil {
 		log.Error().Err(result.Error).Msg("Failed to insert user data record")
 		return result.Error
@@ -116,25 +122,25 @@ func (p *PostgresDriver) InsertUserData(accountID string, data string) error {
 }
 
 // GetUserData retrieves a user data record from the database
-func (p *PostgresDriver) GetUserData(accountID string) (string, time.Time, error) {
+func (p *PostgresDriver) GetRestaurantData(name string) (string, time.Time, error) {
 	log.Info().Msg("Getting user data record...")
-	var userData UserData
+	var restaurantData RestaurantData
 
 	// Get the user data record
-	result := p.Db.Where("account_id = ?", accountID).First(&userData)
+	result := p.Db.Where("name = ?", name).First(&restaurantData)
 	if result.Error != nil {
 		log.Error().Err(result.Error).Msg("Failed to get user data record")
 		return "", time.Time{}, result.Error
 	}
-	return userData.Data, userData.Timestamp, nil
+	return restaurantData.Name, restaurantData.Timestamp, nil
 }
 
 // DeleteUserData deletes a user data record from the database
-func (p *PostgresDriver) DeleteUserData(accountID string) error {
+func (p *PostgresDriver) DeleteRestaurantData(name string) error {
 	log.Info().Msg("Deleting user data record...")
 
 	// Delete the user data record
-	result := p.Db.Where("account_id = ?", accountID).Delete(&UserData{})
+	result := p.Db.Where("name = ?", name).Delete(&RestaurantData{})
 	if result.Error != nil {
 		log.Error().Err(result.Error).Msg("Failed to delete user data record")
 		return result.Error

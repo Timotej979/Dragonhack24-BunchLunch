@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Flipper, Flipped } from 'react-flip-toolkit';
 import CategoryCard from './CategoryCard';
 import RestaurantChooser from './RestaurantChooser';
+import SearchBar from './Searchbar';
 
 const VotingSection = () => {
   const [categories, setCategories] = useState([

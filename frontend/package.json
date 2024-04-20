@@ -14,8 +14,12 @@
     "@radix-ui/react-accordion": "^1.1.2",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
+<<<<<<< HEAD
     "framer-motion": "^11.1.7",
     "next": "14.2.2",
+=======
+    "next": "^14.2.2",
+>>>>>>> 37fee2cb7107b562b818df5940bae09d97386821
     "react": "^18",
     "react-dom": "^18",
     "react-flip-move": "^3.0.5",

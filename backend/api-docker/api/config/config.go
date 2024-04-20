@@ -74,9 +74,9 @@ func NewRootCommand() *cobra.Command {
 	variables := &EnvVarStore{
 		AppConfig:  "dev",
 		DbType:     "postgres",
-		DbUsername: "Celtra",
-		DbPassword: "C3ltr4Ch4ll3ng3",
-		DbName:     "UserData",
+		DbUsername: "postgres",
+		DbPassword: "password",
+		DbName:     "postgres",
 		DbHost:     "localhost",
 		DbPort:     5432,
 		GoogleKey:  "",

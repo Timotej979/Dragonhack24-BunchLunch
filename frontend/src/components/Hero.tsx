@@ -6,7 +6,7 @@ interface HeroProps {
   onButtonClick: () => void; // Define the type for the prop
 }
 
-const Hero = ({ onButtonClick }) => { // Accept the function as a prop
+const Hero = ({ onButtonClick }: HeroProps) => { // Accept the function as a prop
   return (
     <section className="box-border flex relative flex-col shrink-0 self-stretch px-20 mt-5 mb-auto w-auto rounded-xl max-w-[1440px] max-md:grow max-md:mt-12 max-sm:m-auto">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
