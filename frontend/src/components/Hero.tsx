@@ -37,7 +37,7 @@ const Hero = ({ onButtonClick }: HeroProps) => { // Accept the function as a pro
         <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
           <img
             loading="lazy"
-            src="../6mj_bfFudX-1k_iN6pXrb-transformed.jpeg"
+            src="../6mj_bfFudX-1k_iN6pXrb-transformed.png"
             alt="Placeholder image"
             className="box-border object-contain overflow-hidden shrink-0 w-auto rounded-2xl aspect-[0.89] min-h-[20px] min-w-[20px]"
           />
