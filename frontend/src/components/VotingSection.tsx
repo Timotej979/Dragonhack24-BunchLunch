@@ -1,4 +1,3 @@
-//src/components/VotingSection.tsx
 import React, { useState, useEffect } from 'react';
 import { Flipper, Flipped } from 'react-flip-toolkit';
 import CategoryCard from './CategoryCard';
@@ -101,7 +100,7 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
   };
 
   return (
-    <Flipper flipKey={currentPhase}>
+    <Flipper flipKey={`${currentPhase}-${JSON.stringify(categories)}-${JSON.stringify(dishes)}`}>
       <div className="space-y-8">
         <h2 className="text-3xl font-bold px-4 py-2 font-montserrat text-black">1. Vote for a restaurant to make a group order from</h2>
         <div className="bg-white rounded-lg shadow-md mt-12">
