@@ -13,7 +13,7 @@ interface CategoryCardProps {
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ votes, name, cuisine, onClick, selected, leadingCard }) => {
   const containerClasses = `relative flex flex-col items-center p-4 border rounded-lg shadow-sm transition-all duration-300 cursor-pointer ${
-    selected ? "bg-blue-100 hover:bg-blue-200" : "hover:bg-gray-200"
+    selected ? "bg-green-100 hover:bg-green-200" : "hover:bg-green-200"
   }`;
 
   const handleMouseOver = (event: React.MouseEvent<HTMLElement>) => {
