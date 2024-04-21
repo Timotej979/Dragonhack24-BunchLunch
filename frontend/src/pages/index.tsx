@@ -4,6 +4,7 @@ import Hero from "../components/Hero";
 import Convincing from "../components/Convincing";
 import CircularLoader from '@/components/CircularLoader';
 import VotingSection from '@/components/VotingSection';
+import Categories from '@/components/Categories';
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(true);
@@ -36,6 +37,9 @@ export default function Home() {
       ) : showPricing ? (
         <div className={`${contentClass}`}>
           <VotingSection />
+          <>
+            <Categories />
+            </>
         </div>
       ) : (
         <div className={`flex flex-col items-center pt-48 ${contentClass}`}>

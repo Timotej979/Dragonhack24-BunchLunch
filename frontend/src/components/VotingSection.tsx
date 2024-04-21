@@ -1,7 +1,9 @@
+//src/components/VotingSection.tsx
 import React, { useState, useEffect } from 'react';
 import { Flipper, Flipped } from 'react-flip-toolkit';
 import CategoryCard from './CategoryCard';
 import RestaurantChooser from './RestaurantChooser';
+import VoteOption from './VoteOption';
 import SearchBar from './Searchbar';
 import axios from 'axios';
 
@@ -58,6 +60,13 @@ const VotingSection = () => {
   return (
     <Flipper flipKey={categories.map(category => category.votes).join('')}>
       <div className="space-y-8">
+      <h2 className="text-3xl font-bold px-4 py-2 font-montserrat text-black">1. Vote for a restaurant to make a group order from</h2>
+      <div className="bg-white rounded-lg shadow-md mt-12">
+        
+        <VoteOption timeRange="00:00-11:30" actionDescription="Vote restaurant" />
+        <VoteOption timeRange="11:30-11:45" actionDescription="Choose dish" />
+        <VoteOption timeRange="11:45-" actionDescription="Wait for your food" />
+      </div>
         <div className="bg-white rounded-lg shadow-md p-4">
           <h2 className="text-2xl font-bold mb-4">Categories</h2>
           <div className="grid grid-cols-3 gap-4 text-black">
