@@ -180,7 +180,6 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
       setSelectedName(null);
     } else {  // New selection
       setSelectedName(name);
-      setCurrentName(name); // Update currentName when a new dish is selected
     }
   };
 
