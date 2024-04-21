@@ -6,7 +6,7 @@ export default async function  handler(req: NextApiRequest, res: NextApiResponse
     const { lat, lon } = req.body;
 
     const get = await execSync(
-        `curl -v --request POST --header "Content-Type: application/json" --data '{"lat": ${lat}, "lon": ${lon}}' http://127.0.0.1:6000/restaurants`
+        `curl -v --request POST --header "Content-Type: application/json" --data '{"lat": ${lat}, "lon": ${lon}}' http://127.0.0.1:7000/bunchlunch-api/v1/wolt/restaurants`
       );
     const lines = get.toString().trim().split("\n");
 

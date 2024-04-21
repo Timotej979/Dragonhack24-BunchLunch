@@ -20,6 +20,6 @@ func SetupRoutes(router fiber.Router, dalConfig dal.DALConfig, defaultLogger zer
 	// Health check of APIs
 	wolt.Get("/healthz", woltHandlerInstance.Healthz)
 
-	wolt.Get("/restaurants", woltHandlerInstance.GetRestaurants)
+	wolt.Post("/restaurants", woltHandlerInstance.GetRestaurants)
 
 }
