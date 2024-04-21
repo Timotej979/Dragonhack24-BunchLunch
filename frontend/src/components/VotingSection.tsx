@@ -26,7 +26,6 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
 
   const [selectedName, setSelectedName] = useState<string | null>(null);  // Now using name as the identifier
   const [currentName, setCurrentName] = useState(""); // State to manage current selected restaurant name
-  
 
   const selectCategory = () => {
     onCategorySelected(); // Call the passed function when a category is selected
@@ -153,9 +152,9 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
       setSelectedName(null);
     } else {  // New selection
       setSelectedName(name);
+      setCurrentName(name); // Update currentName when a new dish is selected
     }
   };
-  
 
   const voteForCategory = (index: number) => {
     const newCategories = [...categories];
@@ -212,7 +211,7 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
                 </div>
               </Flipped>
             ))}
-            <div className="grid grid-cols-3 gap-4">
+            
               {restaurants.map((restaurant, index) => (
                 <RestaurantCard
                   key={index}
@@ -222,7 +221,7 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
                   price={restaurant.price}
                 />
               ))}
-            </div>
+            
           </>
         );
       case "choosing":
