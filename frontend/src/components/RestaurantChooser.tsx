@@ -1,3 +1,4 @@
+//src/components/RestaurantChooser.tsx
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { headers } from 'next/headers';
@@ -47,11 +48,16 @@ const RestaurantChooser: React.FC<RestaurantChooserProps> = ({ onSelect }) => {
       console.log(restaurantNames);
     });
   };
+  
 
   return (
     <div className="flex flex-col items-center p-4 border rounded-lg shadow-sm bg-gray-100 cursor-pointer" onClick={handleSelect}>
+<<<<<<< HEAD
       <span className="text-lg font-bold">+ Pick a different restaurant</span>
 
+=======
+      <span className="text-lg font-bold">or... Pick a different restaurant:</span>
+>>>>>>> c45bb3886c85d16c8f1d2e319ef5a37ead4285e3
     </div>
   );
 };

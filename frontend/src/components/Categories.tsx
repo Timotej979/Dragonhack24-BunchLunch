@@ -1,6 +1,8 @@
 //src/components/Categories.tsx
 import React, { useState, useEffect } from 'react';
 
+
+
 // Define a type for the category
 type Category = {
   id: number;
