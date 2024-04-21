@@ -191,6 +191,22 @@ func (h *WoltHandler) GetRestaurants(c *fiber.Ctx) error {
 
 	close(ch) // Close the channel after all results have been received
 
+	// Write data to the database
+	for trackID, data := range gscores {
+		// Handle nil values
+		if data["p"] == nil {
+			data["p"] = -1.0
+		}
+		if data["r"] == nil {
+			data["r"] = -1.0
+		}
+		// Insert data into the database
+		err := h.dal.DbDriver.InsertRestaurantData(trackID, lat, lon, data["p"].(float64), data["r"].(float64))
+		if err != nil {
+			log.Error().Err(err).Msg("Error inserting data into the database")
+		}
+	}
+
 	// Return gscores map
 	return c.JSON(gscores)
 }
