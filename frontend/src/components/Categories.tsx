@@ -61,7 +61,7 @@ const Categories: React.FC = () => {
         <button
           onClick={handlePrevClick}
           disabled={currentPage === 0}
-          className="p-4 disabled:opacity-50"
+          className="p-4 disabled:opacity-50 transition-transform duration-300 hover:scale-110"
           aria-label="Previous categories"
         >
           {/* Left arrow SVG or text */}
@@ -71,7 +71,8 @@ const Categories: React.FC = () => {
         <div className="flex space-x-4 overflow-hidden justify-center flex-grow">
           {paginatedCategories().map((category) => (
             <div key={category.id} className="flex flex-col items-center p-4 text-center text-black">
-              <img src={category.icon} alt={category.name} className="w-14 h-14" />
+              <img src={category.icon} alt={category.name} 
+                 className="w-14 h-14 transition-transform duration-300 hover:scale-110 cursor-pointer" />
               <div className="mt-2">{category.name}</div>
             </div>
           ))}
@@ -80,7 +81,7 @@ const Categories: React.FC = () => {
         <button
           onClick={handleNextClick}
           disabled={currentPage >= totalPages - 1}
-          className="p-4 disabled:opacity-50"
+          className="p-4 disabled:opacity-50 transition-transform duration-300 hover:scale-110"
           aria-label="Next categories"
         >
           {/* Right arrow SVG or text */}
