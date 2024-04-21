@@ -23,73 +23,10 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     { name: "Random", cuisine: "Grill", votes: 6 },
     { name: "Gostilna Čad", cuisine: "Grill", votes: 6 },
   ]);
-<<<<<<< Updated upstream
-=======
 
-
-  // Function to render content based on the current phase
-  const renderContentBasedOnPhase = () => {
-    switch (currentPhase) {
-      case "voting":
-        return (
-        <>
-        {categories.map((category, index) => (
-          <Flipped key={category.name} flipId={category.name}>
-            <div>
-              <CategoryCard
-                votes={category.votes}
-                name={category.name}
-                cuisine={category.cuisine}
-                selected={category.name === selectedName}
-                onClick={() => setSelectedName(category.name)}
-              />
-            </div>
-          </Flipped>
-         ))}
-         <div className="grid grid-cols-3 gap-4">
-           {restaurants.map((restaurant, index) => (
-             <RestaurantCard
-               key={index}
-               name={restaurant.name}
-               cuisine={restaurant.cuisine}
-               rating={restaurant.rating}
-               price={restaurant.price}
-             />
-           ))}
-         </div>
-       </>
-     );
-      case "choosing":
-        return dishes.map((dish, index) => (
-          <Flipped key={dish.name} flipId={dish.name}>
-            <div>
-              <DishCard
-                name={dish.name}
-                price={dish.price}
-                allergens={dish.allergens}
-              />
-            </div>
-          </Flipped>
-          
-        ));
-        case "waiting":
-          return (
-            <>
-              <div></div> {/* Empty div for the first column */}
-              <div className='flex justify-center items-center'>
-                <img src="/icons/mothafukin_truck.gif" alt="Waiting" className='h-24 w-24' />
-              </div>
-              <div></div> {/* Empty div for the third column to maintain the grid structure */}
-            </>
-          );
-        default:
-          return null;
-      }
-    };
-
->>>>>>> Stashed changes
-  
   const [selectedName, setSelectedName] = useState<string | null>(null);  // Now using name as the identifier
+  const [currentName, setCurrentName] = useState(""); // State to manage current selected restaurant name
+  
 
   const selectCategory = () => {
     onCategorySelected(); // Call the passed function when a category is selected
@@ -107,7 +44,6 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     { name: "Grill Town", cuisine: "Grill", rating: 2, price: "$$$"},
     { name: "Pasta Central", cuisine: "Italian", rating: 1, price: "$"},
   ]);
-
 
   const [manualOverride, setManualOverride] = useState(false);
 
@@ -192,7 +128,6 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     return () => clearInterval(timerId);
   }, []);
 
-
   // Initial sorting of categories
   useEffect(() => {
     const sortedCategories = [...categories].sort((a, b) => b.votes - a.votes);
@@ -203,6 +138,7 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
 
   const handleVote = (name: string) => {
     const index = categories.findIndex(cat => cat.name === name);
+
     if (selectedName === name) {  // Toggle vote off
       unvoteCategory(index);
     } else if (selectedName && selectedName !== name) {  // Change vote
@@ -213,20 +149,20 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
   };
 
   const handleDishSelection = (name: string) => {
-    const index = dishes.findIndex(dish => dish.name === name);
     if (selectedName === name) {  // Toggle selection off
       setSelectedName(null);
-    } else if (selectedName && selectedName !== name) {  // Change selection
-      setSelectedName(name);
     } else {  // New selection
       setSelectedName(name);
     }
-  }
+  };
+  
+
   const voteForCategory = (index: number) => {
     const newCategories = [...categories];
     newCategories[index].votes += 1;
     setCategories(newCategories);
     setSelectedName(categories[index].name);
+    setCurrentName(categories[index].name); // Update currentName when a new category is voted
   };
 
   const unvoteCategory = (index: number) => {
@@ -234,11 +170,15 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     newCategories[index].votes -= 1;
     setCategories(newCategories);
     setSelectedName(null);
+    setCurrentName(""); // Reset currentName when unvoting a category
   };
 
-  // Manual override for demo purposes
   const switchToDishChoosing = () => {
     setCurrentPhase("choosing");
+  };
+
+  const switchToDishWaiting = () => {
+    setCurrentPhase("waiting");
   };
 
   const changeVote = (index: number) => {
@@ -250,25 +190,15 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     newCategories[index].votes += 1;
     setCategories(newCategories);
     setSelectedName(categories[index].name);
+    setCurrentName(categories[index].name); // Update currentName when changing vote
   };
-  
-  return (
-    <Flipper flipKey={`${currentPhase}-${JSON.stringify(categories)}-${JSON.stringify(dishes)}`}>
-      <div className="space-y-8">
-        <h2 className="text-3xl font-bold px-4 py-2 font-montserrat text-black">1. Vote for a restaurant to make a group order from</h2>
-        <div className="bg-white rounded-lg shadow-md mt-12">
-          <VoteOption timeRange="00:00-11:30" actionDescription="Vote restaurant" currentPhase={currentPhase}/>
-          <VoteOption timeRange="11:30-11:45" actionDescription="Choose dish" currentPhase={currentPhase}/>
-          <VoteOption timeRange="11:45-" actionDescription="Wait for your food" currentPhase={currentPhase}/>
-        </div>
-        {currentPhase === "voting" && (
-          <Button label="Choose Dishes" primary={true} onClick={switchToDishChoosing} />
-        )}
 
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <h2 className="text-2xl font-bold mb-4">{currentPhase === "voting" ? "Categories" : "Choose your Dish"}</h2>
-          <div className="grid grid-cols-3 gap-4 text-black">
-            {currentPhase === "voting" ? categories.map((category, index) => (
+  const renderContentBasedOnPhase = () => {
+    switch (currentPhase) {
+      case "voting":
+        return (
+          <>
+            {categories.map((category, index) => (
               <Flipped key={category.name} flipId={category.name}>
                 <div>
                   <CategoryCard
@@ -277,25 +207,77 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
                     cuisine={category.cuisine}
                     selected={category.name === selectedName}
                     onClick={() => handleVote(category.name)}
-                    leadingCard={index === 0} // Pass leadingCard prop
-                  />
-                </div>
-              </Flipped>
-            )) : dishes.map((dish, index) => (
-              <Flipped key={dish.name} flipId={dish.name}>
-                <div>
-                  <DishCard
-                    name={dish.name}
-                    price={dish.price}
-                    allergens={dish.allergens}
-                    selected={dish.name === selectedName}
-                    onClick={() => handleDishSelection(dish.name)}
-                    
+                    leadingCard={index === 0}
                   />
                 </div>
               </Flipped>
             ))}
-            <RestaurantChooser onSelect={selectCategory} />
+            <div className="grid grid-cols-3 gap-4">
+              {restaurants.map((restaurant, index) => (
+                <RestaurantCard
+                  key={index}
+                  name={restaurant.name}
+                  cuisine={restaurant.cuisine}
+                  rating={restaurant.rating}
+                  price={restaurant.price}
+                />
+              ))}
+            </div>
+          </>
+        );
+      case "choosing":
+        return dishes.map((dish, index) => (
+          <Flipped key={dish.name} flipId={dish.name}>
+            <div>
+              <DishCard
+                name={dish.name}
+                price={dish.price}
+                allergens={dish.allergens}
+                selected={dish.name === selectedName}
+                onClick={() => handleDishSelection(dish.name)}
+              />
+            </div>
+          </Flipped>
+        ));
+      case "waiting":
+        return (
+          <>
+            <div></div>
+            <div className='flex justify-center items-center'>
+              <img src="/icons/mothafukin_truck.gif" alt="Waiting" className='h-24 w-24' />
+            </div>
+            <div></div>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <Flipper flipKey={`${currentPhase}-${JSON.stringify(categories)}-${JSON.stringify(dishes)}`}>
+      <div className="space-y-8">
+        <h2 className="text-3xl font-bold px-4 py-2 font-montserrat text-black">
+          {currentPhase === "voting" && "1. Vote for a restaurant to make a group order from"}
+          {currentPhase === "choosing" && `2. Choose your dish from restaurant: ${currentName}`}
+          {currentPhase === "waiting" && "3. Your group order is on the way!"}
+        </h2>
+        <div className="bg-white rounded-lg shadow-md mt-12">
+          <VoteOption timeRange="00:00-11:30" actionDescription="Vote restaurant" currentPhase={currentPhase}/>
+          <VoteOption timeRange="11:30-11:45" actionDescription="Choose dish" currentPhase={currentPhase}/>
+          <VoteOption timeRange="11:45-" actionDescription="Wait for your food" currentPhase={currentPhase}/>
+        </div>
+        {currentPhase === "voting" && (
+          <Button label="Choose Dishes" primary={true} onClick={switchToDishChoosing} />
+        )}
+        {currentPhase === "choosing" && (
+          <Button label="Skip choosing period to order NOW" primary={true} onClick={switchToDishWaiting} />
+        )}
+
+        <div className="bg-white rounded-lg shadow-md p-4">
+          <h2 className="text-2xl font-bold mb-4">{currentPhase === "voting" ? "Categories" : "Choose your Dish"}</h2>
+          <div className="grid grid-cols-3 gap-4 text-black">
+            {renderContentBasedOnPhase()}
           </div>
         </div>
       </div>
