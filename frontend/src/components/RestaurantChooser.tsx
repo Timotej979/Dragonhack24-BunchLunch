@@ -18,13 +18,14 @@ const RestaurantChooser: React.FC<RestaurantChooserProps> = ({ onSelect }) => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
       const object = { "lat":lat, "lon":lon};
+
+      console.log(object);
       
       
-      const response = await fetch(`http://localhost:6000/bunchlunch-api/v1/wolt/restaurants`, {
+      const response = await fetch(`/api/restaurants`, {
         method: "POST",
         headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify(object),
     });

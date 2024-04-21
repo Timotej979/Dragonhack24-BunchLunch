@@ -418,6 +418,8 @@ services:
         - API_ARCH
         - API_ALPINE_VERSION
     restart: always
+    ports:
+      - 6000:6000
     environment:
       - API_CONFIG
       - API_DB_TYPE
