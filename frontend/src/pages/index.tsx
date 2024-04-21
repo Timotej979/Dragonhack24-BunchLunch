@@ -10,6 +10,8 @@ export default function Home() {
   const [isVisible, setIsVisible] = useState(true);
   const [showPricing, setShowPricing] = useState(false);
   const [contentClass, setContentClass] = useState('fade-in'); // Control animation
+  const [showCategoriesComponent, setShowCategoriesComponent] = useState(false); // Added for Categories control
+
 
   useEffect(() => {
     if (!isVisible) {
@@ -25,6 +27,10 @@ export default function Home() {
     }
   }, [isVisible]);
 
+  const toggleCategories = () => { // Function to toggle categories visibility
+    setShowCategoriesComponent(!showCategoriesComponent);
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center">
       {isVisible ? (
@@ -36,10 +42,12 @@ export default function Home() {
         </div>
       ) : showPricing ? (
         <div className={`${contentClass}`}>
-          <VotingSection />
+          <VotingSection toggleCategories={toggleCategories}/>
           <>
             <Categories />
             </>
+            {showCategoriesComponent && <Categories />}
+
         </div>
       ) : (
         <div className={`flex flex-col items-center pt-48 ${contentClass}`}>

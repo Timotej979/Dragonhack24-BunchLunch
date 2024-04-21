@@ -1,3 +1,4 @@
+//src/components/VotingSection.tsx
 import React, { useState, useEffect } from 'react';
 import { Flipper, Flipped } from 'react-flip-toolkit';
 import CategoryCard from './CategoryCard';
@@ -9,15 +10,67 @@ import Button from './Button';
 import SearchBar from './Searchbar';
 import axios from 'axios';
 
-const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void }) => {
+// Define the types for the props in an interface
+interface VotingSectionProps {
+  onCategorySelected: () => void;  // Function type, no arguments and returns nothing
+  toggleCategories: () => void;   // Assuming toggleCategories is also a function with no arguments
+}
+
+const VotingSection: React.FC<VotingSectionProps> = ({ onCategorySelected, toggleCategories }) => {
   const [currentPhase, setCurrentPhase] = useState("voting");
   const [categories, setCategories] = useState([
     { name: "Maharaja", cuisine: "Indian", votes: 7 },
     { name: "Random", cuisine: "Grill", votes: 6 },
     { name: "Gostilna Čad", cuisine: "Grill", votes: 6 },
   ]);
+
+
+  // Function to render content based on the current phase
+  const renderContentBasedOnPhase = () => {
+    switch (currentPhase) {
+      case "voting":
+        return categories.map((category, index) => (
+          <Flipped key={category.name} flipId={category.name}>
+            <div>
+              <CategoryCard
+                votes={category.votes}
+                name={category.name}
+                cuisine={category.cuisine}
+                selected={category.name === selectedName}
+                onClick={() => setSelectedName(category.name)}
+              />
+            </div>
+          </Flipped>
+        ));
+      case "choosing":
+        return dishes.map((dish, index) => (
+          <Flipped key={dish.name} flipId={dish.name}>
+            <div>
+              <DishCard
+                name={dish.name}
+                price={dish.price}
+                allergens={dish.allergens}
+              />
+            </div>
+          </Flipped>
+          
+        ));
+        case "waiting":
+          return (
+            <>
+             
+                <img src="/icons/mothafukin_truck.gif" alt="Waiting" />
+              
+            </>
+          );
+          
+      default:
+        return null;
+    }
+  };
+
   
-  const [selectedName, setSelectedName] = useState<string | null>(null);  // Now using name as the identifier
+  const [selectedName, setSelectedName] = useState(null);  // Now using name as the identifier
 
   const selectCategory = () => {
     onCategorySelected(); // Call the passed function when a category is selected
@@ -88,6 +141,11 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     setCurrentPhase("choosing");
   };
 
+  const switchToWaiting = () => {
+    setCurrentPhase("waiting");
+  }
+
+
   const changeVote = (index: number) => {
     const newCategories = [...categories];
     const oldIndex = categories.findIndex(cat => cat.name === selectedName);
@@ -99,10 +157,16 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     setSelectedName(categories[index].name);
   };
 
+  
+
   return (
     <Flipper flipKey={`${currentPhase}-${JSON.stringify(categories)}-${JSON.stringify(dishes)}`}>
       <div className="space-y-8">
-        <h2 className="text-3xl font-bold px-4 py-2 font-montserrat text-black">1. Vote for a restaurant to make a group order from</h2>
+      <h2 className="text-3xl font-bold px-4 py-2 font-montserrat text-black">
+        {currentPhase === "voting" && "1. Vote for a restaurant to make a group order from"}
+        {currentPhase === "choosing" && "2. Choose your dish from the chosen restaurant"}
+        {currentPhase === "waiting" && "3. Your group order is on the way!"}
+        </h2>
         <div className="bg-white rounded-lg shadow-md mt-12">
           <VoteOption timeRange="00:00-11:30" actionDescription="Vote restaurant" currentPhase={currentPhase}/>
           <VoteOption timeRange="11:30-11:45" actionDescription="Choose dish" currentPhase={currentPhase}/>
@@ -111,34 +175,14 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
         {currentPhase === "voting" && (
           <Button label="Choose Dishes" primary={true} onClick={switchToDishChoosing} />
         )}
+        {currentPhase === "choosing" && (
+          <Button label="Order Now" primary={true} onClick={switchToWaiting} />
+        )}
 
         <div className="bg-white rounded-lg shadow-md p-4">
           <h2 className="text-2xl font-bold mb-4">{currentPhase === "voting" ? "Categories" : "Choose your Dish"}</h2>
           <div className="grid grid-cols-3 gap-4 text-black">
-            {currentPhase === "voting" ? categories.map((category, index) => (
-              <Flipped key={category.name} flipId={category.name}>
-                <div>
-                  <CategoryCard
-                    votes={category.votes}
-                    name={category.name}
-                    cuisine={category.cuisine}
-                    selected={category.name === selectedName}
-                    onClick={() => handleVote(category.name)}
-                  />
-                </div>
-              </Flipped>
-            )) : dishes.map((dish, index) => (
-              <Flipped key={dish.name} flipId={dish.name}>
-                <div>
-                  <DishCard
-                    name={dish.name}
-                    price={dish.price}
-                    allergens={dish.allergens}
-                  />
-                </div>
-              </Flipped>
-            ))}
-            <RestaurantChooser onSelect={selectCategory} />
+          {renderContentBasedOnPhase()}
           </div>
         </div>
       </div>
