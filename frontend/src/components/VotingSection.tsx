@@ -1,19 +1,54 @@
-//src/components/VotingSection.tsx
 import React, { useState, useEffect } from 'react';
 import { Flipper, Flipped } from 'react-flip-toolkit';
 import CategoryCard from './CategoryCard';
 import RestaurantChooser from './RestaurantChooser';
 import VoteOption from './VoteOption';
+import { isCurrentTimeInRange } from './utilities/timeUtils';
+import DishCard from './Dishcard';
+import Button from './Button';
 import SearchBar from './Searchbar';
 import axios from 'axios';
 
-const VotingSection = () => {
+const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void }) => {
+  const [currentPhase, setCurrentPhase] = useState("voting");
   const [categories, setCategories] = useState([
     { name: "Maharaja", cuisine: "Indian", votes: 7 },
     { name: "Random", cuisine: "Grill", votes: 6 },
     { name: "Gostilna Čad", cuisine: "Grill", votes: 6 },
   ]);
+  
   const [selectedName, setSelectedName] = useState<string | null>(null);  // Now using name as the identifier
+
+  const selectCategory = () => {
+    onCategorySelected(); // Call the passed function when a category is selected
+  };
+
+  // Assume we have similar mock data or API response for dishes
+  const [dishes, setDishes] = useState([
+    { name: "Chicken Curry", price: 9.99, allergens: ["nuts", "dairy"] },
+    { name: "Veggie Pizza", price: 12.49, allergens: ["gluten"] },
+    { name: "Beef Steak", price: 15.99, allergens: ["none"] },
+  ]);
+
+
+  const [manualOverride, setManualOverride] = useState(false);
+
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      const currentTime = new Date();
+      let newPhase = 'waiting'; // Default to 'waiting'
+      if (currentTime.getHours() < 11 || (currentTime.getHours() === 11 && currentTime.getMinutes() < 30)) {
+        newPhase = 'voting';
+      } else if (currentTime.getHours() === 11 && currentTime.getMinutes() < 45) {
+        newPhase = 'choosing';
+      }
+      setCurrentPhase(newPhase);
+    }, 15*60000); // Update every minute
+
+    return () => clearInterval(timerId);
+  }, []);
+
 
   // Initial sorting of categories
   useEffect(() => {
@@ -48,6 +83,11 @@ const VotingSection = () => {
     setSelectedName(null);
   };
 
+  // Manual override for demo purposes
+  const switchToDishChoosing = () => {
+    setCurrentPhase("choosing");
+  };
+
   const changeVote = (index: number) => {
     const newCategories = [...categories];
     const oldIndex = categories.findIndex(cat => cat.name === selectedName);
@@ -60,19 +100,22 @@ const VotingSection = () => {
   };
 
   return (
-    <Flipper flipKey={categories.map(category => category.votes).join('')}>
+    <Flipper flipKey={`${currentPhase}-${JSON.stringify(categories)}-${JSON.stringify(dishes)}`}>
       <div className="space-y-8">
-      <h2 className="text-3xl font-bold px-4 py-2 font-montserrat text-black">1. Vote for a restaurant to make a group order from</h2>
-      <div className="bg-white rounded-lg shadow-md mt-12">
-        
-        <VoteOption timeRange="00:00-11:30" actionDescription="Vote restaurant" />
-        <VoteOption timeRange="11:30-11:45" actionDescription="Choose dish" />
-        <VoteOption timeRange="11:45-" actionDescription="Wait for your food" />
-      </div>
+        <h2 className="text-3xl font-bold px-4 py-2 font-montserrat text-black">1. Vote for a restaurant to make a group order from</h2>
+        <div className="bg-white rounded-lg shadow-md mt-12">
+          <VoteOption timeRange="00:00-11:30" actionDescription="Vote restaurant" currentPhase={currentPhase}/>
+          <VoteOption timeRange="11:30-11:45" actionDescription="Choose dish" currentPhase={currentPhase}/>
+          <VoteOption timeRange="11:45-" actionDescription="Wait for your food" currentPhase={currentPhase}/>
+        </div>
+        {currentPhase === "voting" && (
+          <Button label="Choose Dishes" primary={true} onClick={switchToDishChoosing} />
+        )}
+
         <div className="bg-white rounded-lg shadow-md p-4">
-          <h2 className="text-2xl font-bold mb-4">Categories</h2>
+          <h2 className="text-2xl font-bold mb-4">{currentPhase === "voting" ? "Categories" : "Choose your Dish"}</h2>
           <div className="grid grid-cols-3 gap-4 text-black">
-            {categories.map((category, index) => (
+            {currentPhase === "voting" ? categories.map((category, index) => (
               <Flipped key={category.name} flipId={category.name}>
                 <div>
                   <CategoryCard
@@ -84,8 +127,18 @@ const VotingSection = () => {
                   />
                 </div>
               </Flipped>
+            )) : dishes.map((dish, index) => (
+              <Flipped key={dish.name} flipId={dish.name}>
+                <div>
+                  <DishCard
+                    name={dish.name}
+                    price={dish.price}
+                    allergens={dish.allergens}
+                  />
+                </div>
+              </Flipped>
             ))}
-            <RestaurantChooser onSelect={(restaurant) => console.log(restaurant)} />
+            <RestaurantChooser onSelect={selectCategory} />
           </div>
         </div>
       </div>

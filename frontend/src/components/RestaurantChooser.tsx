@@ -22,6 +22,7 @@ const RestaurantChooser: React.FC<RestaurantChooserProps> = ({ onSelect }) => {
       console.log(object);
       
       
+<<<<<<< HEAD
       const response = await fetch(`/api/restaurants`, {
         method: "POST",
         headers: {
@@ -29,6 +30,8 @@ const RestaurantChooser: React.FC<RestaurantChooserProps> = ({ onSelect }) => {
         },
         body: JSON.stringify(object),
     });
+=======
+>>>>>>> fef2f36e2b25f59aac11cd216dedf25a101cc8f6
 
       
       
