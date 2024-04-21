@@ -292,7 +292,7 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
   return (
     <Flipper flipKey={`${currentPhase}-${JSON.stringify(categories)}-${JSON.stringify(dishes)}`}>
       <div className="space-y-8">
-        <h2 className="text-3xl font-bold px-4 py-2 font-montserrat text-black">
+        <h2 className="text-3xl font-bold px-4 py-4 font-montserrat text-black">
           {currentPhase === "voting" && "1. Vote for a restaurant to make a group order from"}
           {currentPhase === "choosing" && `2. Choose your dish from restaurant: ${currentName}`}
           {currentPhase === "waiting" && "3. Your group order is on the way!"}
