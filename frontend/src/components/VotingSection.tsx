@@ -106,6 +106,34 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
 
         // Update the categories state
         setCategories(newCategories);
+      
+        // Set the restaurants state
+        const newRestaurants = randomRestaurantNames.map((name, index) => {
+          const restaurantData = parsedData[name];
+          if (restaurantData) {
+            // Check if the restaurant data is present in the parsed data
+            if (parsedData[name].rating == -1) {
+              parsedData[name].rating = Math.floor(Math.random() * 5) + 1;
+            }
+            if (parsedData[name].price == -1) {
+              parsedData[name].price = 2;
+            }
+            // Convert the price to a string
+            const price = "$".repeat(parsedData[name].price);
+            // Return the restaurant object
+            return { name, cuisine: randomCuisines[index], rating: parsedData[name].rating, price: price };
+          } else {
+            // Handle the case where parsedData[name] is undefined
+            // Generate random rating and price for the restaurant 
+            var price = "$".repeat(Math.floor(Math.random() * 5) + 1);
+            var rating = Math.floor(Math.random() * 5) + 1;
+            console.error(`Data for restaurant ${name} is missing.`);
+            return { name, cuisine: "Unknown", rating, price };
+          }
+        });
+
+        // Update the restaurants state
+        setRestaurants(newRestaurants);
       });
     };
 
