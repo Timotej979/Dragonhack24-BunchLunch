@@ -18,7 +18,9 @@ const VotingSection = () => {
   // Initial sorting of categories
   useEffect(() => {
     const sortedCategories = [...categories].sort((a, b) => b.votes - a.votes);
-    setCategories(sortedCategories);
+    const isSorted = JSON.stringify(categories) === JSON.stringify(sortedCategories);
+    if (!isSorted) setCategories(sortedCategories);
+    
   }, [categories]); // Run this effect only once, on component mount
 
   const handleVote = (name: string) => {
