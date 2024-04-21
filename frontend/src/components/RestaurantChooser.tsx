@@ -1,29 +1,38 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
-import { headers } from 'next/headers';
 
 interface RestaurantChooserProps {
-  onSelect: (restaurant: string) => void; // This will be used when you have a method to select restaurants
+  onSelect: (restaurant: string) => void;  // Callback when a restaurant is selected
 }
 
 const RestaurantChooser: React.FC<RestaurantChooserProps> = ({ onSelect }) => {
+  
   useEffect(() => {
-    // Call handleSelect when component mounts
-    handleSelect();
+    // You might want to load initial data here or leave it if nothing is needed initially
   }, []);
 
-  const handleSelect = () => {
-    // Placeholder functionality to select a restaurant
-    navigator.geolocation.getCurrentPosition(async function(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      const object = { "lat":lat, "lon":lon};
-      
-      
+  const handleSelect = async () => {
+    // Placeholder for selecting a restaurant
+    const object = { "lat":64, "lon":14};
+    console.log(object);
 
-      
-      
-    });
+    try {
+      const response = await fetch(`/api/restaurants`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(object),
+      });
+
+      const data = await response.json();  // Assuming the response is in JSON format
+
+      // Call onSelect with the first restaurant's name as an example
+      if (data && data.restaurants && data.restaurants.length > 0) {
+        onSelect(data.restaurants[0].name);  // Example usage of onSelect
+      }
+    } catch (error) {
+      console.error('Failed to fetch restaurants', error);
+    }
   };
 
   return (

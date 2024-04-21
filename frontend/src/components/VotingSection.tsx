@@ -12,7 +12,7 @@ import axios from 'axios';
 const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void }) => {
   const [currentPhase, setCurrentPhase] = useState("voting");
   const [categories, setCategories] = useState([
-    { name: "Maharaja", cuisine: "Indian", votes: 7 },
+    { name: "Maharaja", cuisine: "Indian", votes: 6 },
     { name: "Random", cuisine: "Grill", votes: 6 },
     { name: "Gostilna Čad", cuisine: "Grill", votes: 6 },
   ]);
@@ -69,6 +69,16 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     }
   };
 
+  const handleDishSelection = (name: string) => {
+    const index = dishes.findIndex(dish => dish.name === name);
+    if (selectedName === name) {  // Toggle selection off
+      setSelectedName(null);
+    } else if (selectedName && selectedName !== name) {  // Change selection
+      setSelectedName(name);
+    } else {  // New selection
+      setSelectedName(name);
+    }
+  }
   const voteForCategory = (index: number) => {
     const newCategories = [...categories];
     newCategories[index].votes += 1;
@@ -98,7 +108,7 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     setCategories(newCategories);
     setSelectedName(categories[index].name);
   };
-
+  
   return (
     <Flipper flipKey={`${currentPhase}-${JSON.stringify(categories)}-${JSON.stringify(dishes)}`}>
       <div className="space-y-8">
@@ -124,6 +134,7 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
                     cuisine={category.cuisine}
                     selected={category.name === selectedName}
                     onClick={() => handleVote(category.name)}
+                    leadingCard={index === 0} // Pass leadingCard prop
                   />
                 </div>
               </Flipped>
@@ -134,6 +145,9 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
                     name={dish.name}
                     price={dish.price}
                     allergens={dish.allergens}
+                    selected={dish.name === selectedName}
+                    onClick={() => handleDishSelection(dish.name)}
+                    
                   />
                 </div>
               </Flipped>
