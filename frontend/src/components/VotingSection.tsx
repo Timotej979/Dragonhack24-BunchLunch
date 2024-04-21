@@ -12,10 +12,11 @@ const VotingSection = () => {
   ]);
   const [selectedName, setSelectedName] = useState<string | null>(null);  // Now using name as the identifier
 
+  // Initial sorting of categories
   useEffect(() => {
     const sortedCategories = [...categories].sort((a, b) => b.votes - a.votes);
     setCategories(sortedCategories);
-  }, [categories]);
+  }, []); // Run this effect only once, on component mount
 
   const handleVote = (name: string) => {
     const index = categories.findIndex(cat => cat.name === name);
