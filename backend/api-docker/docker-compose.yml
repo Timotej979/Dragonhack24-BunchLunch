@@ -19,6 +19,8 @@ services:
       - API_DB_PASSWORD
       - API_DB_NAME
       - API_GOOGLE_KEY
+    ports:
+      - 6000:6000
     networks:
       - api-nginx
     #healthcheck:

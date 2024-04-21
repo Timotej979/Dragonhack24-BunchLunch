@@ -1,3 +1,4 @@
+//src/components/RestaurantChooser.tsx
 import React, { useEffect } from 'react';
 
 interface RestaurantChooserProps {
@@ -10,30 +11,38 @@ const RestaurantChooser: React.FC<RestaurantChooserProps> = ({ onSelect }) => {
     // You might want to load initial data here or leave it if nothing is needed initially
   }, []);
 
-  const handleSelect = async () => {
-    // Placeholder for selecting a restaurant
-    const object = { "lat":64, "lon":14};
-    console.log(object);
+  const handleSelect = () => {
+    // Placeholder functionality to select a restaurant
 
-    try {
+    // Get the user's location
+    navigator.geolocation.getCurrentPosition(async function(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const object = { "lat":lat, "lon":lon};
+      
+      // Call the API to get the list of restaurants
       const response = await fetch(`/api/restaurants`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+        "Content-Type": "application/json",
         },
         body: JSON.stringify(object),
       });
 
-      const data = await response.json();  // Assuming the response is in JSON format
+      const jsonData = await response.json();
 
-      // Call onSelect with the first restaurant's name as an example
-      if (data && data.restaurants && data.restaurants.length > 0) {
-        onSelect(data.restaurants[0].name);  // Example usage of onSelect
+      // Parse the response and call onSelect with the restaurant name
+      const parsedData: Record<string, { name: string; price: number; rating: number }> = {};
+      for (const key in jsonData) {
+        if (Object.prototype.hasOwnProperty.call(jsonData, key)) {
+          const name = key.replace("venue-", "");
+          const { p: price, r: rating } = jsonData[key];
+          parsedData[name] = { name, price, rating };
+        }
       }
-    } catch (error) {
-      console.error('Failed to fetch restaurants', error);
-    }
+    });
   };
+  
 
   return (
     <div className="flex flex-col items-center p-4 border rounded-lg shadow-sm bg-gray-100 cursor-pointer" onClick={handleSelect}>

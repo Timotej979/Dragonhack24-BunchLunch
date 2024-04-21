@@ -1,21 +1,20 @@
-import { exec, execSync } from "child_process";
+import { execSync } from "child_process";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default function handler(req, res) {
-    const object = req.body;
+export default async function  handler(req: NextApiRequest, res: NextApiResponse) {
+    // Get lat and lon from the request body
+    const { lat, lon } = req.body;
 
-    /* const response = fetch(`http://timpc:6000/restaurants`, {
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify(object),
-    }); */
-    var version = execSync(`curl --request POST --header "Content-Type: application/json" --data '{"lat": ${43}, "lon": ${14}}' http://timpc:6000/restaurants -o output.txt`).toString();
-    //take second to last line
-    console.log();
-    console.log();
-    console.log();
-    console.log(version);
+    const get = await execSync(
+        `curl -v --request POST --header "Content-Type: application/json" --data '{"lat": ${lat}, "lon": ${lon}}' http://127.0.0.1:7000/bunchlunch-api/v1/wolt/restaurants`
+      );
+    const lines = get.toString().trim().split("\n");
+
+    console.log(lines);
+
+    const lastLine = lines[lines.length - 1];
+  
+    console.log(lastLine)
     // Assuming you want to return a JSON response
-    res.status(200).json(JSON.parse(version))
+    res.status(200).json(JSON.parse(lastLine))
   }
