@@ -180,7 +180,6 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
       setSelectedName(null);
     } else {  // New selection
       setSelectedName(name);
-      setCurrentName(name); // Update currentName when a new dish is selected
     }
   };
 
@@ -239,17 +238,26 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
                 </div>
               </Flipped>
             ))}
-            
               {restaurants.map((restaurant, index) => (
-                <RestaurantCard
-                  key={index}
-                  name={restaurant.name}
-                  cuisine={restaurant.cuisine}
-                  rating={restaurant.rating}
-                  price={restaurant.price}
-                />
+                <Flipped key={index} flipId={`restaurant-${index}`}>
+                  {index === restaurants.length - 1 ? (
+                    <div className="bg-green-500 p-4 border rounded-lg shadow-lg bg-white flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    </div>
+                  ) : (
+                    <div>
+                      <RestaurantCard
+                        name={restaurant.name}
+                        cuisine={restaurant.cuisine}
+                        rating={restaurant.rating}
+                        price={restaurant.price}
+                      />
+                    </div>
+                  )}
+                </Flipped>
               ))}
-            
           </>
         );
       case "choosing":
