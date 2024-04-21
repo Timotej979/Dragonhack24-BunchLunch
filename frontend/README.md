@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BunchLunch: The Ultimate Food Democracy 🍔🥗
 
-## Getting Started
+## Welcome to BunchLunch
 
-First, run the development server:
+BunchLunch isn't just another app; it's the culinary compass guiding your group's gastronomic journey. Ever been stuck in the eternal struggle of deciding where to order food with friends or colleagues? Say goodbye to indecisiveness and hello to the delicious democracy of BunchLunch!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## The Dilemma 🤔
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Picture this: You're hungry. Your friends are hungry. But where to eat? The endless back-and-forth of "I don't mind, what about you?" is a black hole of decision-making. Enter BunchLunch, your trusty guide through the labyrinth of culinary choices.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## The Solution 💡
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+BunchLunch simplifies the chaos with a revolutionary voting system. Here's how it works:
 
-## Learn More
+1. **Create a Bunch**: Start a new group lunch session. Invite your buddies, colleagues, or fellow foodies to join the feast.
 
-To learn more about Next.js, take a look at the following resources:
+2. **Vote for Victory**: Browse through a curated list of local restaurants or add your favorites. Each member casts their vote for the eatery of their dreams.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Chow Down**: The restaurant with the most votes emerges victorious! No more squabbles or indecision—just delicious harmony.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+4. **Seamless Ordering**: Once the decision is made, effortlessly place a group order directly from the app. It's like magic, but tastier.
 
-## Deploy on Vercel
+## Integration with Wolt 🚀
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+BunchLunch goes beyond just picking a restaurant; we've integrated with Wolt for a seamless ordering experience. With a proof of concept (PoC) integration, you can transition seamlessly from decision-making to dining with just a few taps.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Why BunchLunch? 🌟
+
+- **Efficiency**: Say goodbye to wasted time and energy on endless debates. BunchLunch streamlines the decision-making process, so you can focus on what really matters: enjoying your meal.
+  
+- **Inclusivity**: Everyone's voice matters. BunchLunch ensures that every member of your group has a say in where to eat, fostering a sense of unity and camaraderie.
+
+- **Convenience**: With integrated ordering, BunchLunch eliminates the hassle of switching between apps or wrangling individual orders. It's all about convenience, baby.
+
+## Ready to Feast? 🍽️
+
+Join the revolution and let BunchLunch guide your next culinary adventure. Say hello to stress-free group dining and bon appétit!

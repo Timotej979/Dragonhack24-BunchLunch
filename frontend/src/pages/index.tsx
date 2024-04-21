@@ -44,7 +44,7 @@ export default function Home() {
       ) : (
         <div className={`flex flex-col items-center pt-48 ${contentClass}`}>
           <p className="text-3xl font-medium text-center mb-4 text-black font-montserrat">
-            Hold tight, we're connecting your account to your LunchBunch group and food delivery service!
+            Hold tight, we're connecting your account to your BunchLunch group and food delivery service!
           </p>
           <CircularLoader />
         </div>
