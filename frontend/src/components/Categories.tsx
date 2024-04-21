@@ -54,8 +54,8 @@ const Categories: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex items-center">
+    <div className="flex flex-col items-center pt-8">
+      <div className="flex justify-between w-full max-w-4xl">
         <button
           onClick={handlePrevClick}
           disabled={currentPage === 0}
@@ -63,13 +63,13 @@ const Categories: React.FC = () => {
           aria-label="Previous categories"
         >
           {/* Left arrow SVG or text */}
-          <img src="/icons/leftarrow.svg" alt="Previous" className="h-6 w-6" />
+          <img src="/icons/leftarrow.svg" alt="Previous" className="h-10 w-10" />
         </button>
 
-        <div className="flex space-x-4 overflow-hidden">
+        <div className="flex space-x-4 overflow-hidden justify-center flex-grow">
           {paginatedCategories().map((category) => (
             <div key={category.id} className="flex flex-col items-center p-4 text-center text-black">
-              <img src={category.icon} alt={category.name} className="w-12 h-12" />
+              <img src={category.icon} alt={category.name} className="w-14 h-14" />
               <div className="mt-2">{category.name}</div>
             </div>
           ))}
@@ -82,7 +82,7 @@ const Categories: React.FC = () => {
           aria-label="Next categories"
         >
           {/* Right arrow SVG or text */}
-          <img src="/icons/rightarrow.svg" alt="Next" className="h-6 w-6"/>
+          <img src="/icons/rightarrow.svg" alt="Next" className="h-10 w-10"/>
         </button>
       </div>
     </div>
