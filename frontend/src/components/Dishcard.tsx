@@ -24,7 +24,7 @@ const DishCard: React.FC<DishCardProps> = ({ name, price, allergens, selected, o
   return (
     <div
       className={`flex flex-col items-center p-4 border rounded-lg shadow-sm cursor-pointer transition-all duration-300 ${
-        selected || isHovered ? "bg-blue-100 hover:bg-blue-200" : "hover:bg-gray-200"
+        selected || isHovered ? "bg-green-100 hover:bg-green-200" : "hover:bg-gray-200"
       }`}
       onClick={onClick}
       onMouseOver={handleMouseOver}
