@@ -11,21 +11,21 @@ const SideNavbar: React.FC = () => {
         <li className="p-4">
           <Link href="/">
             <div className="inline-block hover:bg-gray-700">
-              <img src="/choose.svg" alt="Choose Icon" className="w-6 h-6" />
+              <img src="/icons/group.svg" alt="Group Icon" className="w-6 h-6" />
             </div>
           </Link>
         </li>
         <li className="p-4">
           <Link href="/about">
             <div className="inline-block hover:bg-gray-700">
-              <img src="/menu.svg" alt="Menu Icon" className="w-6 h-6" />
+              <img src="/icons/order.svg" alt="Order Icon" className="w-6 h-6" />
             </div>
           </Link>
         </li>
         <li className="p-4">
           <Link href="/contact">
             <div className="inline-block hover:bg-gray-700">
-              <img src="/planet-earth.svg" alt="Planet Icon" className="w-6 h-6" />
+              <img src="/icons/history.svg" alt="History Icon" className="w-6 h-6" />
             </div>
           </Link>
         </li>

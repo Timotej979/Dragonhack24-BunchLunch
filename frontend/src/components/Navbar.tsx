@@ -9,8 +9,6 @@ const Logo: React.FC<{ src: string; alt: string }> = ({ src, alt }) => (
   />
 );
 
-
-
 const Navbar: React.FC = () => (
   <header className="flex items-center justify-between p-4 bg-white w-full h-20 shadow-md"> {/* Fixed height to Navbar */}
     <div className="flex items-center cursor-pointer"> {/* Flex container for logo and text */}
@@ -18,7 +16,6 @@ const Navbar: React.FC = () => (
       <h1 className="ml-2 text-3xl font-righteous text-black">BunchLunch</h1> {/* Using custom font class */}
     </div>
     <nav className="flex gap-4">
-      <Button label="Pricing" />
       <Button label="Get BunchLunch" outline />
       <Button label="Login" primary />
     </nav>
