@@ -1,14 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { headers } from 'next/headers';
 
 interface RestaurantChooserProps {
   onSelect: (restaurant: string) => void; // This will be used when you have a method to select restaurants
 }
 
 const RestaurantChooser: React.FC<RestaurantChooserProps> = ({ onSelect }) => {
-  // Placeholder functionality to select a restaurant
+  useEffect(() => {
+    // Call handleSelect when component mounts
+    handleSelect();
+  }, []);
+
   const handleSelect = () => {
-    // This could be replaced with an actual selection method
-    onSelect("New Restaurant");
+    // Placeholder functionality to select a restaurant
+    navigator.geolocation.getCurrentPosition(async function(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const object = { "lat":lat, "lon":lon};
+      
+      
+      const response = await fetch(`http://localhost:6000/bunchlunch-api/v1/wolt/restaurants`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(object),
+    });
+
+      
+      
+    });
   };
 
   return (
