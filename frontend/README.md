@@ -32,6 +32,10 @@ BunchLunch goes beyond just picking a restaurant; we've integrated with Wolt for
 
 - **Convenience**: With integrated ordering, BunchLunch eliminates the hassle of switching between apps or wrangling individual orders. It's all about convenience, baby.
 
+- **Plastic Waste Reduction**: Not only does group ordering save time, but it also reduces waste. By ordering in bulk, we help minimize packaging and cut down on delivery trips. It's a win-win for your team and the environment!
+
+- **Reducing Carbon Footprint**: By consolidating orders into one delivery, we minimize the carbon emissions associated with multiple trips. With every meal, you're taking a step towards a more sustainable future.
+
 ## Ready to Feast? 🍽️
 
 Join the revolution and let BunchLunch guide your next culinary adventure. Say hello to stress-free group dining and bon appétit!
