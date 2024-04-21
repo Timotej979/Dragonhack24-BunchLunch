@@ -173,10 +173,10 @@ const VotingSection: React.FC<VotingSectionProps> = ({ onCategorySelected, toggl
           <VoteOption timeRange="11:45-" actionDescription="Wait for your food" currentPhase={currentPhase}/>
         </div>
         {currentPhase === "voting" && (
-          <Button label="Choose Dishes" primary={true} onClick={switchToDishChoosing} />
+          <Button label="End the voting period early" primary={true} onClick={switchToDishChoosing} />
         )}
         {currentPhase === "choosing" && (
-          <Button label="Order Now" primary={true} onClick={switchToWaiting} />
+          <Button label="Don't wait and make the order NOW, before the choosing period ends" primary={true} onClick={switchToWaiting} />
         )}
 
         <div className="bg-white rounded-lg shadow-md p-4">
