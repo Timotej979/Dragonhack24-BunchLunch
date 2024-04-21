@@ -5,6 +5,7 @@ import CategoryCard from './CategoryCard';
 import RestaurantChooser from './RestaurantChooser';
 import VoteOption from './VoteOption';
 import SearchBar from './Searchbar';
+import axios from 'axios';
 
 const VotingSection = () => {
   const [categories, setCategories] = useState([
@@ -18,7 +19,7 @@ const VotingSection = () => {
   useEffect(() => {
     const sortedCategories = [...categories].sort((a, b) => b.votes - a.votes);
     setCategories(sortedCategories);
-  }, []); // Run this effect only once, on component mount
+  }, [categories]); // Run this effect only once, on component mount
 
   const handleVote = (name: string) => {
     const index = categories.findIndex(cat => cat.name === name);
