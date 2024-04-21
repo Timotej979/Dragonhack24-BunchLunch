@@ -10,16 +10,47 @@ const VotingSection = () => {
     { name: "Random", cuisine: "Grill", votes: 6 },
     { name: "Gostilna Čad", cuisine: "Grill", votes: 6 },
   ]);
+  const [selectedName, setSelectedName] = useState<string | null>(null);  // Now using name as the identifier
 
   useEffect(() => {
     const sortedCategories = [...categories].sort((a, b) => b.votes - a.votes);
     setCategories(sortedCategories);
   }, [categories]);
 
-  const handleVote = (index: number) => {
+  const handleVote = (name: string) => {
+    const index = categories.findIndex(cat => cat.name === name);
+    if (selectedName === name) {  // Toggle vote off
+      unvoteCategory(index);
+    } else if (selectedName && selectedName !== name) {  // Change vote
+      changeVote(index);
+    } else {  // New vote
+      voteForCategory(index);
+    }
+  };
+
+  const voteForCategory = (index: number) => {
     const newCategories = [...categories];
     newCategories[index].votes += 1;
     setCategories(newCategories);
+    setSelectedName(categories[index].name);
+  };
+
+  const unvoteCategory = (index: number) => {
+    const newCategories = [...categories];
+    newCategories[index].votes -= 1;
+    setCategories(newCategories);
+    setSelectedName(null);
+  };
+
+  const changeVote = (index: number) => {
+    const newCategories = [...categories];
+    const oldIndex = categories.findIndex(cat => cat.name === selectedName);
+    if (oldIndex !== -1) {
+      newCategories[oldIndex].votes -= 1;
+    }
+    newCategories[index].votes += 1;
+    setCategories(newCategories);
+    setSelectedName(categories[index].name);
   };
 
   return (
@@ -29,13 +60,14 @@ const VotingSection = () => {
           <h2 className="text-2xl font-bold mb-4">Categories</h2>
           <div className="grid grid-cols-3 gap-4 text-black">
             {categories.map((category, index) => (
-              <Flipped key={index} flipId={category.name}>
+              <Flipped key={category.name} flipId={category.name}>
                 <div>
                   <CategoryCard
                     votes={category.votes}
                     name={category.name}
                     cuisine={category.cuisine}
-                    onClick={() => handleVote(index)}
+                    selected={category.name === selectedName}
+                    onClick={() => handleVote(category.name)}
                   />
                 </div>
               </Flipped>
