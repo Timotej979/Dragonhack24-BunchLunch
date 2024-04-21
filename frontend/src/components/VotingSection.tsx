@@ -8,6 +8,7 @@ import DishCard from './Dishcard';
 import Button from './Button';
 import SearchBar from './Searchbar';
 import axios from 'axios';
+import RestaurantCard from './RestaurantCard';
 
 interface Category {
   name: string;
@@ -22,6 +23,71 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     { name: "Random", cuisine: "Grill", votes: 6 },
     { name: "Gostilna Čad", cuisine: "Grill", votes: 6 },
   ]);
+<<<<<<< Updated upstream
+=======
+
+
+  // Function to render content based on the current phase
+  const renderContentBasedOnPhase = () => {
+    switch (currentPhase) {
+      case "voting":
+        return (
+        <>
+        {categories.map((category, index) => (
+          <Flipped key={category.name} flipId={category.name}>
+            <div>
+              <CategoryCard
+                votes={category.votes}
+                name={category.name}
+                cuisine={category.cuisine}
+                selected={category.name === selectedName}
+                onClick={() => setSelectedName(category.name)}
+              />
+            </div>
+          </Flipped>
+         ))}
+         <div className="grid grid-cols-3 gap-4">
+           {restaurants.map((restaurant, index) => (
+             <RestaurantCard
+               key={index}
+               name={restaurant.name}
+               cuisine={restaurant.cuisine}
+               rating={restaurant.rating}
+               price={restaurant.price}
+             />
+           ))}
+         </div>
+       </>
+     );
+      case "choosing":
+        return dishes.map((dish, index) => (
+          <Flipped key={dish.name} flipId={dish.name}>
+            <div>
+              <DishCard
+                name={dish.name}
+                price={dish.price}
+                allergens={dish.allergens}
+              />
+            </div>
+          </Flipped>
+          
+        ));
+        case "waiting":
+          return (
+            <>
+              <div></div> {/* Empty div for the first column */}
+              <div className='flex justify-center items-center'>
+                <img src="/icons/mothafukin_truck.gif" alt="Waiting" className='h-24 w-24' />
+              </div>
+              <div></div> {/* Empty div for the third column to maintain the grid structure */}
+            </>
+          );
+        default:
+          return null;
+      }
+    };
+
+>>>>>>> Stashed changes
   
   const [selectedName, setSelectedName] = useState<string | null>(null);  // Now using name as the identifier
 
@@ -34,6 +100,12 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
     { name: "Chicken Curry", price: 9.99, allergens: ["nuts", "dairy"] },
     { name: "Veggie Pizza", price: 12.49, allergens: ["gluten"] },
     { name: "Beef Steak", price: 15.99, allergens: ["none"] },
+  ]);
+
+  const [restaurants, setRestaurants] = useState([
+    { name: "Maharaja", cuisine: "Indian", rating: 5, price: "$$"},
+    { name: "Grill Town", cuisine: "Grill", rating: 2, price: "$$$"},
+    { name: "Pasta Central", cuisine: "Italian", rating: 1, price: "$"},
   ]);
 
 
