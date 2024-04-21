@@ -9,6 +9,12 @@ import Button from './Button';
 import SearchBar from './Searchbar';
 import axios from 'axios';
 
+interface Category {
+  name: string;
+  cuisine: string;
+  votes: number;
+}
+
 const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void }) => {
   const [currentPhase, setCurrentPhase] = useState("voting");
   const [categories, setCategories] = useState([
@@ -33,6 +39,71 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
 
   const [manualOverride, setManualOverride] = useState(false);
 
+  useEffect(() => {
+    // Fetch the parsed data here using fetch or any other method
+    const fetchParsedData = async () => {
+      // Get the user's location
+      navigator.geolocation.getCurrentPosition(async function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const object = { "lat":lat, "lon":lon};
+
+        // Call the API to get the list of restaurants
+        const response = await fetch(`/api/restaurants`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(object),
+        });
+
+        const jsonData = await response.json();
+
+        // Parse the response and call onSelect with the restaurant name
+        const parsedData: Record<string, { name: string; price: number; rating: number }> = {};
+        for (const key in jsonData) {
+          if (Object.prototype.hasOwnProperty.call(jsonData, key)) {
+            const name = key.replace("venue-", "");
+            const { p: price, r: rating } = jsonData[key];
+            parsedData[name] = { name, price, rating };
+          }
+        }
+
+        // Select three random restaurants
+        const restaurantNames = Object.keys(parsedData);
+        const randomRestaurantNames = restaurantNames.sort(() => 0.5 - Math.random()).slice(0, 3);
+        // Replace the first character of the every restaurant name with a capital character
+        randomRestaurantNames.forEach((name, index) => {
+          randomRestaurantNames[index] = name.charAt(0).toUpperCase() + name.slice(1);
+        });
+
+        // Generate three random vote numbers
+        const randomVotes = randomRestaurantNames.map(() => Math.floor(Math.random() * 10));
+
+        // Generate three random cuisine types
+        const cuisines = ['Indian', 'Italian', 'Chinese', 'Mexican', 'Japanese', 'Thai'];
+        const randomCuisines = randomRestaurantNames.map(() => cuisines[Math.floor(Math.random() * cuisines.length)]);
+
+        // Set the categories based on the parsed data
+        const newCategories = randomRestaurantNames.map((name, index) => {
+          const restaurantData = parsedData[name];
+          if (restaurantData) {
+            const { price, rating } = restaurantData;
+            return { name, cuisine: randomCuisines[index], votes: randomVotes[index] };
+          } else {
+            // Handle the case where parsedData[name] is undefined
+            console.error(`Data for restaurant ${name} is missing.`);
+            return { name, cuisine: "Unknown", votes: 0 };
+          }
+        });
+
+        // Update the categories state
+        setCategories(newCategories);
+      });
+    };
+
+    fetchParsedData();
+  }, []);
 
   useEffect(() => {
     const timerId = setInterval(() => {
