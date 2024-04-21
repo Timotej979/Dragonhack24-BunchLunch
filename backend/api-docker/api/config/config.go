@@ -84,11 +84,20 @@ func NewRootCommand() *cobra.Command {
 
 	// Define our command
 	rootCmd := &cobra.Command{
-		Use:   "./userapi",
-		Short: "User API is a simple API that fetches user data from a database.",
-		Long: "\nUser API is a simple API that fetches user data from a database.\n" +
-			"The command argument hierarchy for running the program is as follows:\n" +
-			"\t- flags\n\t- environment variables\n\t- configuration files and the defaults set by the tool",
+		Use:   "./bunchlunchapi",
+		Short: "BunchLunch API is a simple API that fetches restaurant data from Wolt and Glovo.",
+		Long: "\nBunchLunch API is a simple API that fetches restaurant data from Wolt and Glovo." +
+			"\n\nThe API supports the following commands:" +
+			"\n\n- ./bunchlunchapi" +
+			"\n\nThe API supports the following flags:" +
+			"\n\n- --config, -c: The application configuration" +
+			"\n- --db-type, -t: The database type" +
+			"\n- --db-host, -H: The database host" +
+			"\n- --db-port, -P: The database port" +
+			"\n- --db-username, -u: The database username" +
+			"\n- --db-password, -p: The database password" +
+			"\n- --db-name, -n: The database name" +
+			"\n- --google-key, -k: The Google API key",
 		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 			// You can bind cobra and viper in a few locations, but PersistencePreRunE on the root command works well
 			return initializeConfig(cmd)

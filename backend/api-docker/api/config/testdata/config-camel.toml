@@ -1,4 +1,4 @@
-appConfig="dev"
+config="dev"
 dbUsername="root"
 dbPassword="pass"
 dbName="data"

@@ -42,20 +42,21 @@ func TestPrecedence(t *testing.T) {
 				require.NoError(t, err, "error writing test config file")
 				defer os.Remove(filepath.Join(tmpDir, "config.toml"))
 
-				// Run ./userapi
+				// Run ./bunchlunchapi
 				cmd := NewRootCommand()
 				output := &bytes.Buffer{}
 				cmd.SetOut(output)
 				cmd.Execute()
 
 				gotOutput := output.String()
-				wantOutput := "AppConfig: dev" +
+				wantOutput := "Config: dev" +
 					"\nDbType: postgres" +
 					"\nDbHost: localhost" +
 					"\nDbPort: 3306" +
 					"\nDbUsername: root" +
 					"\nDbPassword: REDACTED" +
-					"\nDbName: data\n"
+					"\nDbName: data\n" +
+					"GoogleKey: REDACTED\n"
 
 				assert.Equal(t, wantOutput, gotOutput, "expected the output to match the configuration settings")
 			})
@@ -84,20 +85,21 @@ func TestPrecedence(t *testing.T) {
 				require.NoError(t, err, "error writing test config file")
 				defer os.Remove(filepath.Join(tmpDir, "config.json"))
 
-				// Run ./userapi
+				// Run ./bunchlunchapi
 				cmd := NewRootCommand()
 				output := &bytes.Buffer{}
 				cmd.SetOut(output)
 				cmd.Execute()
 
 				gotOutput := output.String()
-				wantOutput := "AppConfig: dev" +
+				wantOutput := "Config: dev" +
 					"\nDbType: postgres" +
 					"\nDbHost: localhost" +
 					"\nDbPort: 3306" +
 					"\nDbUsername: root" +
 					"\nDbPassword: REDACTED" +
-					"\nDbName: data\n"
+					"\nDbName: data\n" +
+					"GoogleKey: REDACTED\n"
 
 				assert.Equal(t, wantOutput, gotOutput, "expected the output to match the configuration settings")
 			})
@@ -126,20 +128,21 @@ func TestPrecedence(t *testing.T) {
 				require.NoError(t, err, "error writing test config file")
 				defer os.Remove(filepath.Join(tmpDir, "config.yaml"))
 
-				// Run ./userapi
+				// Run ./bunchlunchapi
 				cmd := NewRootCommand()
 				output := &bytes.Buffer{}
 				cmd.SetOut(output)
 				cmd.Execute()
 
 				gotOutput := output.String()
-				wantOutput := "AppConfig: dev" +
+				wantOutput := "Config: dev" +
 					"\nDbType: postgres" +
 					"\nDbHost: localhost" +
 					"\nDbPort: 3306" +
 					"\nDbUsername: root" +
 					"\nDbPassword: REDACTED" +
-					"\nDbName: data\n"
+					"\nDbName: data\n" +
+					"GoogleKey: REDACTED\n"
 
 				assert.Equal(t, wantOutput, gotOutput, "expected the output to match the configuration settings")
 			})
@@ -148,15 +151,15 @@ func TestPrecedence(t *testing.T) {
 
 	// Set arguments with an environment variable
 	t.Run("env var", func(t *testing.T) {
-		// Run API_APP_CONFIG=prod API_DB_TYPE=mysql API_DB_HOST=local-host API_DB_PORT=4406 API_DB_USERNAME=admin API_DB_PASSWORD=admin API_DB_NAME=database ./userapi
-		os.Setenv("API_APP_CONFIG", "prod")
+		// Run API_APP_CONFIG=prod API_DB_TYPE=mysql API_DB_HOST=local-host API_DB_PORT=4406 API_DB_USERNAME=admin API_DB_PASSWORD=admin API_DB_NAME=database ./bunchlunchapi
+		os.Setenv("API_CONFIG", "prod")
 		os.Setenv("API_DB_TYPE", "mysql")
 		os.Setenv("API_DB_HOST", "local-host")
 		os.Setenv("API_DB_PORT", "4406")
 		os.Setenv("API_DB_USERNAME", "admin")
 		os.Setenv("API_DB_PASSWORD", "admin")
 		os.Setenv("API_DB_NAME", "database")
-		defer os.Unsetenv("API_APP_CONFIG")
+		defer os.Unsetenv("API_CONFIG")
 		defer os.Unsetenv("API_DB_TYPE")
 		defer os.Unsetenv("API_DB_HOST")
 		defer os.Unsetenv("API_DB_PORT")
@@ -170,41 +173,43 @@ func TestPrecedence(t *testing.T) {
 		cmd.Execute()
 
 		gotOutput := output.String()
-		wantOutput := "AppConfig: prod" +
+		wantOutput := "Config: prod" +
 			"\nDbType: mysql" +
 			"\nDbHost: local-host" +
 			"\nDbPort: 4406" +
 			"\nDbUsername: admin" +
 			"\nDbPassword: REDACTED" +
-			"\nDbName: database\n"
+			"\nDbName: database\n" +
+			"GoogleKey: REDACTED\n"
 
 		assert.Equal(t, wantOutput, gotOutput, "expected the output to match the environment variables")
 	})
 
 	// Set arguments with a full flag
 	t.Run("full flag", func(t *testing.T) {
-		// Run ./userapi --app-config prod --db-username admin --db-password admin --db-name database --db-host local-host --db-port 4406
+		// Run ./bunchlunchapi --app-config prod --db-username admin --db-password admin --db-name database --db-host local-host --db-port 4406
 		cmd := NewRootCommand()
 		output := &bytes.Buffer{}
 		cmd.SetOut(output)
-		cmd.SetArgs([]string{"--app-config", "prod", "--db-username", "admin", "--db-password", "admin", "--db-name", "database", "--db-host", "local-host", "--db-port", "4406", "--db-type", "mysql"})
+		cmd.SetArgs([]string{"--config", "prod", "--db-username", "admin", "--db-password", "admin", "--db-name", "database", "--db-host", "local-host", "--db-port", "4406", "--db-type", "mysql"})
 		cmd.Execute()
 
 		gotOutput := output.String()
-		wantOutput := "AppConfig: prod" +
+		wantOutput := "Config: prod" +
 			"\nDbType: mysql" +
 			"\nDbHost: local-host" +
 			"\nDbPort: 4406" +
 			"\nDbUsername: admin" +
 			"\nDbPassword: REDACTED" +
-			"\nDbName: database\n"
+			"\nDbName: database\n" +
+			"GoogleKey: REDACTED\n"
 
 		assert.Equal(t, wantOutput, gotOutput, "expected the output to match the flag values")
 	})
 
 	// Set arguments with a shorthand flag
 	t.Run("shorthand flag", func(t *testing.T) {
-		// Run ./userapi -c prod -u admin -p admin -n database -H local-host -P 4406 -t mysql
+		// Run ./bunchlunchapi -c prod -u admin -p admin -n database -H local-host -P 4406 -t mysql
 		cmd := NewRootCommand()
 		output := &bytes.Buffer{}
 		cmd.SetOut(output)
@@ -212,13 +217,14 @@ func TestPrecedence(t *testing.T) {
 		cmd.Execute()
 
 		gotOutput := output.String()
-		wantOutput := "AppConfig: prod" +
+		wantOutput := "Config: prod" +
 			"\nDbType: mysql" +
 			"\nDbHost: local-host" +
 			"\nDbPort: 4406" +
 			"\nDbUsername: admin" +
 			"\nDbPassword: REDACTED" +
-			"\nDbName: database\n"
+			"\nDbName: database\n" +
+			"GoogleKey: REDACTED\n"
 
 		assert.Equal(t, wantOutput, gotOutput, "expected the output to match the flag values")
 	})
