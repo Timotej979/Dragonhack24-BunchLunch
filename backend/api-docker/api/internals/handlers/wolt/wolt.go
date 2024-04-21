@@ -126,8 +126,8 @@ func (h *WoltHandler) GetRestaurants(c *fiber.Ctx) error {
 
 			req, err := http.NewRequest("GET", googleURL, nil)
 			if err != nil {
-				log.Error().Err(err).Msg("Error creating Google Places API request")
-				ch <- nil // Send nil value to channel if error occurs
+				//log.Error().Err(err).Msg("Error creating Google Places API request")
+				//ch <- nil // Send nil value to channel if error occurs
 				return
 			}
 
@@ -135,12 +135,12 @@ func (h *WoltHandler) GetRestaurants(c *fiber.Ctx) error {
 
 			// Set timeout for the request
 			client := &http.Client{
-				Timeout: 5 * time.Second,
+				Timeout: 100 * time.Second,
 			}
 
 			resp, err := client.Do(req)
 			if err != nil {
-				log.Error().Err(err).Msg("Error sending Google Places API request")
+				//log.Error().Err(err).Msg("Error sending Google Places API request")
 				ch <- nil // Send nil value to channel if error occurs
 				return
 			}
@@ -148,20 +148,20 @@ func (h *WoltHandler) GetRestaurants(c *fiber.Ctx) error {
 
 			bodyBytes, err := io.ReadAll(resp.Body)
 			if err != nil {
-				log.Error().Err(err).Msg("Error reading Google Places API response body")
+				//log.Error().Err(err).Msg("Error reading Google Places API response body")
 				ch <- nil // Send nil value to channel if error occurs
 				return
 			}
 
 			var googleResponse GooglePlacesResponse
 			if err := json.Unmarshal(bodyBytes, &googleResponse); err != nil {
-				log.Error().Err(err).Msg("Error decoding Google Places API response")
+				//log.Error().Err(err).Msg("Error decoding Google Places API response")
 				ch <- nil // Send nil value to channel if error occurs
 				return
 			}
 
 			if len(googleResponse.Candidates) == 0 {
-				log.Warn().Str("name", name).Msg("No candidates found")
+				//log.Warn().Str("name", name).Msg("No candidates found")
 				ch <- nil // Send nil value to channel if no candidate found
 				return
 			}
