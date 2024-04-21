@@ -25,6 +25,7 @@ type DatabaseDriver interface {
 	Close() error
 	Migrate() error
 	InsertRestaurantData(name string, lattiude float64, longitude float64, price float64, rating float64) error
+	GetRestaurantData(name string) (float64, float64, error)
 	DeleteRestaurantData(name string) error
 }
 
