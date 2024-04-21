@@ -42,10 +42,6 @@ const RestaurantChooser: React.FC<RestaurantChooserProps> = ({ onSelect }) => {
           parsedData[name] = { name, price, rating };
         }
       }
-
-      const restaurantNames = Object.keys(parsedData);
-
-      console.log(restaurantNames);
     });
   };
   
