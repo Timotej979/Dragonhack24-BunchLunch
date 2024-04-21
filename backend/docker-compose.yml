@@ -418,8 +418,6 @@ services:
         - API_ARCH
         - API_ALPINE_VERSION
     restart: always
-    ports:
-      - 6000:6000
     environment:
       - API_CONFIG
       - API_DB_TYPE
@@ -429,9 +427,12 @@ services:
       - API_DB_PASSWORD
       - API_DB_NAME
       - API_GOOGLE_KEY
+    depends_on:
+      db:
+        condition: service_healthy
     #healthcheck:
-    #  test: ["CMD", "curl -f http://localhost:6000/bunchlunch-api/v1/wolt/healthz", "&&" ,"curl -f http://localhost:6000/bunchlunch-api/v1/glovo/db/healthz"]
-    #  start_period: 20s
+    #  test: ["CMD", "curl -f http://127.0.0.1:6000/bunchlunch-api/v1/wolt/healthz"]
+    #  start_period: 10s
     #  interval: 10s
     #  timeout: 5s
     #  retries: 5
@@ -444,12 +445,12 @@ services:
     restart: always
     ports:
       - ${NGINX_OUT_PORT}:8000
-    #depends_on:
-    #  api:
-    #    condition: service_healthy
+    depends_on:
+      api:
+        condition: service_started
     #healthcheck:
-    #  test: ["CMD", "curl -f http://localhost:7000/bunchlunch-api/v1/wolt/healthz", "&&", "curl -f http://localhost:7000/bunchlunch-api/v1/glovo/db/healthz"]
-    #  start_period: 20s
+    #  test: ["CMD", "curl -f http://127.0.0.1:7000/bunchlunch-api/v1/wolt/healthz"]
+    #  start_period: 10s
     #  interval: 10s
     #  timeout: 5s
     #  retries: 5  

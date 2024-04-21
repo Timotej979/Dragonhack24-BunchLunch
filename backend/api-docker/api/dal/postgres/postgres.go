@@ -121,6 +121,20 @@ func (p *PostgresDriver) InsertRestaurantData(name string, lattiude float64, lon
 	return nil
 }
 
+// GetUserData retrieves a user data record from the database
+func (p *PostgresDriver) GetRestaurantData(name string) (float64, float64, error) {
+	log.Info().Msg("Retrieving user data record...")
+	var restaurantData RestaurantData
+
+	// Retrieve the user data record
+	result := p.Db.Where("name = ?", name).First(&restaurantData)
+	if result.Error != nil {
+		log.Error().Err(result.Error).Msg("Failed to retrieve user data record")
+		return 0, 0, result.Error
+	}
+	return restaurantData.Price, restaurantData.Rating, nil
+}
+
 // DeleteUserData deletes a user data record from the database
 func (p *PostgresDriver) DeleteRestaurantData(name string) error {
 	log.Info().Msg("Deleting user data record...")
