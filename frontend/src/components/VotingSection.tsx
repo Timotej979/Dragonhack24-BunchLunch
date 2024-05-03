@@ -20,7 +20,7 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
   const [currentPhase, setCurrentPhase] = useState("voting");
   const [categories, setCategories] = useState([
     { name: "Maharaja", cuisine: "Indian", votes: 6 },
-    { name: "Random", cuisine: "Grill", votes: 6 },
+    { name: "Das ist Valter", cuisine: "Grill", votes: 6 },
     { name: "Gostilna Čad", cuisine: "Grill", votes: 6 },
   ]);
 
@@ -46,6 +46,7 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
 
   const [manualOverride, setManualOverride] = useState(false);
 
+  
   useEffect(() => {
     // Fetch the parsed data here using fetch or any other method
     const fetchParsedData = async () => {
@@ -55,6 +56,7 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
         const lon = position.coords.longitude;
         const object = { "lat":lat, "lon":lon};
 
+        /*
         // Call the API to get the list of restaurants
         const response = await fetch(`/api/restaurants`, {
           method: "POST",
@@ -134,6 +136,8 @@ const VotingSection = ({ onCategorySelected }: { onCategorySelected: () => void 
 
         // Update the restaurants state
         setRestaurants(newRestaurants);
+        
+        */
       });
     };
 
