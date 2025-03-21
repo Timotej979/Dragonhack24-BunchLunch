@@ -1,6 +1,7 @@
 module github.com/Timotej979/Dragonhack24-BunchLunch/backend/api-docker/api
 
 go 1.22.1
+toolchain go1.24.1
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.5
@@ -98,7 +99,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
-	golang.org/x/crypto v0.31.0 // indirect
+	golang.org/x/crypto v0.35.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	golang.org/x/net v0.33.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
