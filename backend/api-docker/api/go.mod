@@ -3,7 +3,7 @@ module github.com/Timotej979/Dragonhack24-BunchLunch/backend/api-docker/api
 go 1.22.1
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.4
+	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/gofiber/swagger v1.0.0
 	github.com/rs/zerolog v1.32.0
 	github.com/spf13/cobra v1.8.0
